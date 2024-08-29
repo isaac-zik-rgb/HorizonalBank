@@ -1,20 +1,13 @@
-# Stage 1: Build the application (if you are including the build process in Docker)
-# Use this if you need to build your app within Docker
-# FROM gradle:7.5.0-jdk17 AS builder
-# WORKDIR /app
-# COPY . .
-# RUN gradle build --no-daemon
-
-# Stage 2: Create the final image
+# Use an appropriate base image with the JDK version you need
 FROM openjdk:17-jdk-slim
 
-# Define the JAR file path
-ARG JAR_FILE=target/*.jar
+# Define a build argument to specify the JAR file path
+ARG JAR_FILE=build/libs/ata-0.0.1-SNAPSHOT.jar
 
-# Copy the JAR file into the container
+# Copy the JAR file from the build context to the container
 COPY ${JAR_FILE} app.jar
 
-# Expose port 8080
+# Expose port 8080 for the application
 EXPOSE 8080
 
 # Set the command to run the JAR file
