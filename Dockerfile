@@ -6,7 +6,7 @@ WORKDIR /app
 
 RUN ls -al /
 # Copy the JAR file into the container
-COPY build/libs/*.jar app.jar
+COPY ata/build/libs/*.jar app.jar
 
 # Expose the port the app runs on
 EXPOSE 8080
