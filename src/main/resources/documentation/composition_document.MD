@@ -36,7 +36,7 @@ As a User, I want to have the ability to categorize my transactions and view spe
 
 
 ### User
-- id: Long 
+- accountId: Long 
 - firstName: String
 - lastName: String
 - password: String 
@@ -51,14 +51,16 @@ As a User, I want to have the ability to categorize my transactions and view spe
 
 
 ### Authority
-- id: Long
+- accountId: Long
 - authority: String 
 - users: List<User>
 
 
 ### Account
-- id: Long 
-- accountNumber: String 
+- accountId: Long 
+- accountNumber: String
+- accountName: String
+- creationDate: date
 - balance: Double 
 - user: User 
 - transactions: List<Transaction>
@@ -68,22 +70,23 @@ As a User, I want to have the ability to categorize my transactions and view spe
 
 
 ### Transaction
-- id: Long 
+- accountId: Long 
 - transactionType: String (Withdraw, Deposit) 
 - amount: Double 
 - date: Date
 - category: String
 - remarks: String 
 - account: Account 
+- status: String
 - recipientAccountNumber: String (Optional for fund transfers)
 
 
 ### DigitalCard
-- id: Long 
+- accountId: Long 
 - cardNumber: String 
 - cardType: String 
 - expirationDate: Date 
-- cvv: String 
+- cvv: Integer 
 - account: Account 
 - status: String (Active, Frozen)
 
@@ -107,32 +110,34 @@ As a User, I want to have the ability to categorize my transactions and view spe
 
 ### Database Tables
 #### users
-- id: number
-- firstName: varchar
+- accountId: number
+- first_name: varchar
 - password: varchar
 - email: varchar
-- lastName: varchar
+- last_name: varchar
 - address: varchar
 - state: varchar
 - ssn: number
 - postal_code: number
 
 #### authorities
-- id: number 
+- accountId: number 
 - authority: varchar
 - user_roles
 - user_id: number
 - role_id: number
 
 #### accounts
-- id: number
-- account_number: varchar 
+- accountId: number
+- account_number: varchar
+- account_name: varchar
+- creation_date: date
 - balance: decimal
 - user_id: number
 - card_id: number
 
 ### transactions
-- id: number 
+- accountId: number 
 - transaction_type: varchar 
 - amount: decimal 
 - date: timestamp 
@@ -140,11 +145,11 @@ As a User, I want to have the ability to categorize my transactions and view spe
 - recipient_account_number: varchar
 
 #### cards
-- id: number 
+- accountId: number 
 - card_number: varchar 
 - card_type: varchar 
 - expiration_date: date 
-- cvv: varchar 
+- cvv: number 
 - account_id: number 
 - status: varchar
 
@@ -153,13 +158,14 @@ As a User, I want to have the ability to categorize my transactions and view spe
 - **Login User**                                                `/api/auth/login`
 - **Validate Token**                                          `/api/auth/validate`
 - **Get User Accounts**                                     `/api/accounts`
-- **Get Account By Id**                                   `/api/accounts/{id}`
+- **Get Account By Id**                                   `/api/accounts/{accountId}`
 - **Get Transactions By Account**                       `/api/transactions?accountId={accountId}`
 - **Transfer Funds**                                  `/api/transactions/transfer`
 - **Get Digital Cards By Account**                                `/api/digital-cards?accountId={accountId}`
-- **Freeze/Unfreeze Digital Card**                                `/api/digital-cards/{id}/status`
+- **Freeze/Unfreeze Digital Card**                                `/api/digital-cards/{accountId}/status`
 - **Generate Transaction Report**                                 `/api/reports/transactions?accountId={accountId}&startDate={startDate}&endDate={endDate}`
-- **Safe delete account**                                    `/api/account/{id}`
+- **Safe delete account**                                    `/api/account/{accountId}`
+
 
 
 
@@ -187,3 +193,6 @@ As a User, I want to have the ability to categorize my transactions and view spe
 
 ### My Account Page
 ![Account Page](./images/Select-Account-Menu.png)
+
+### Transfer Funds Page
+![Transfer Fund Page](./images/Payment%20Transfer.jpg)
