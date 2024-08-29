@@ -1,14 +1,14 @@
-# Use an appropriate base image with the JDK version you need
+# Use a base image with Java installed
 FROM openjdk:17-jdk-slim
 
-# Define a build argument to specify the JAR file path
-ARG JAR_FILE=./build/libs/ata-0.0.1-SNAPSHOT.jar
+# Set the working directory
+WORKDIR /app
 
-# Copy the JAR file from the build context to the container
-COPY ${JAR_FILE} app.jar
+# Copy the JAR file into the container
+COPY target/ata-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose port 8080 for the application
+# Expose the port the app runs on
 EXPOSE 8080
 
-# Set the command to run the JAR file
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
