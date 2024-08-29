@@ -5,6 +5,7 @@ FROM openjdk:17-jdk-alpine
 # Set the working directory inside the container
 WORKDIR /app
 
+VOLUME /tmp
 # Copy the JAR file from the host to the container
 COPY build/libs/ata-0.0.1-SNAPSHOT.jar app.jar
 
