@@ -4,6 +4,7 @@ FROM openjdk:17-jdk-slim
 # Set the working directory
 WORKDIR /app
 
+RUN ls -al /
 # Copy the JAR file into the container
 COPY build/libs/*.jar app.jar
 
