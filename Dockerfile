@@ -1,39 +1,21 @@
-# # Stage 1: Build the JAR file
+# Stage 1: Build the application (if you are including the build process in Docker)
+# Use this if you need to build your app within Docker
 # FROM gradle:7.5.0-jdk17 AS builder
 # WORKDIR /app
 # COPY . .
 # RUN gradle build --no-daemon
-#
-# # Stage 2: Build the final image
-# FROM openjdk:17-jdk-alpine
-# VOLUME /tmp
-# COPY --from=builder /app/build/libs/ata-0.0.1-SNAPSHOT.jar app.jar
-# ENTRYPOINT ["java","-jar","/app.jar"]
-
-# Stage 1: Build the JAR file
-FROM gradle:7.5.0-jdk17 AS builder
-
-# Set the working directory inside the container
-WORKDIR /app
-
-# Cache dependencies
-COPY build.gradle settings.gradle ./
-RUN gradle build -x test --no-daemon --parallel --continue
-
-# Copy the rest of the project files
-COPY . .
-
-# Build the application
-RUN gradle build -x test --no-daemon --parallel --continue
 
 # Stage 2: Create the final image
-FROM openjdk:17-jdk-alpine
+FROM openjdk:17-jdk-slim
 
-# Create a volume for temporary files
-VOLUME /tmp
+# Define the JAR file path
+ARG JAR_FILE=build/libs/*.jar
 
-# Copy the JAR file from the build stage
-COPY --from=builder /app/build/libs/ata-0.0.1-SNAPSHOT.jar app.jar
+# Copy the JAR file into the container
+COPY ${JAR_FILE} app.jar
 
-# Set the entry point to run the JAR
-ENTRYPOINT ["java","-jar","/app.jar"]
+# Expose port 8080
+EXPOSE 8080
+
+# Set the command to run the JAR file
+ENTRYPOINT ["java", "-jar", "/app.jar"]
