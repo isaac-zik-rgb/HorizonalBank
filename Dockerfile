@@ -9,7 +9,7 @@
 FROM openjdk:17-jdk-slim
 
 # Define the JAR file path
-ARG JAR_FILE=./build/libs/*.jar
+ARG JAR_FILE=target/*.jar
 
 # Copy the JAR file into the container
 COPY ${JAR_FILE} app.jar
