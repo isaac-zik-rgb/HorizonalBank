@@ -18,6 +18,7 @@ externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
+  - url: horizonal-mz29tyzk.b4a.run/api
   - url: http://localhost:8080/api
 tags:
   - name: auth
