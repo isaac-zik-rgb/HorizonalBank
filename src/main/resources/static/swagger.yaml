@@ -19,6 +19,7 @@ externalDocs:
   url: http://swagger.io
 servers:
   - url: https://horizonalbank.onrender.com/api
+  - url: http://localhost:8080/api
 tags:
   - name: auth
     description: Everything about user authentication and authorization
