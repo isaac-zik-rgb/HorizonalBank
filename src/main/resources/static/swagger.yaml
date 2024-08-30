@@ -19,6 +19,7 @@ externalDocs:
   url: http://swagger.io
 servers:
   - url: horizonal-mz29tyzk.b4a.run/api
+  - url: https://horizonalbank.onrender.com/api
   - url: http://localhost:8080/api
 tags:
   - name: auth
