@@ -13,3 +13,6 @@ EXPOSE 8080
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Dummy comment to force rebuild
+# This forces Docker to rebuild from this line onward
