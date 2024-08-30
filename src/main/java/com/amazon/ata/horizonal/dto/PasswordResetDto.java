@@ -1,14 +1,17 @@
 package com.amazon.ata.horizonal.dto;
 
 public class PasswordResetDto {
-    private String newPassword;
-    private String confirmPassword;
+    private String new_password;
+    private String confirm_password;
     private String email;
 
     public PasswordResetDto(String confirmPassword, String newPassword, String email) {
-        this.confirmPassword = confirmPassword;
-        this.newPassword = newPassword;
+        this.confirm_password = confirmPassword;
+        this.new_password = newPassword;
         this.email = email;
+    }
+
+    public PasswordResetDto() {
     }
 
     public String getEmail() {
@@ -19,19 +22,19 @@ public class PasswordResetDto {
         this.email = email;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
+    public String getNew_password() {
+        return new_password;
     }
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
+    public void setNew_password(String new_password) {
+        this.new_password = new_password;
     }
 
-    public String getNewPassword() {
-        return newPassword;
+    public String getConfirm_password() {
+        return confirm_password;
     }
 
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
+    public void setConfirm_password(String confirm_password) {
+        this.confirm_password = confirm_password;
     }
 }

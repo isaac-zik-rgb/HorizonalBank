@@ -164,13 +164,13 @@ public class UserController {
             }
 
     }
-    @GetMapping("/password/reset")
+    @GetMapping("/email/verify")
     public ResponseEntity<?> getUserByEmail(@RequestParam String email){
         if (email != null && !email.isBlank()){
             try{
                 UserDetails user =  userDetailService.loadUserByUsername(email);
                 return ResponseEntity.ok().body("User Found In the Database!");
-            }catch (UsernameNotFoundException e){
+            }catch (EmailNotFoundException e){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No User Found!");
             }
 
@@ -180,11 +180,12 @@ public class UserController {
 
     @PutMapping("/password/reset")
     public ResponseEntity<?> resetPassword(@RequestBody PasswordResetDto resetDto) {
-        if (resetDto.getNewPassword().equals(resetDto.getConfirmPassword())){
+        System.out.println(resetDto.getNew_password());
+        if (resetDto.getNew_password().equals(resetDto.getConfirm_password())){
             try {
 
                 User user = userRepo.findByEmail(resetDto.getEmail()).get();
-                user.setPassword(resetDto.getNewPassword());
+                user.setPassword(resetDto.getNew_password());
                 userRepo.save(user);
                 return ResponseEntity.ok().body("Password Successfully Updated");
             }catch (Exception e){

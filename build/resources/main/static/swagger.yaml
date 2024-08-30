@@ -197,12 +197,73 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/email/verify:
+    get:
+      tags:
+        - auth
+      summary: verifies that the given email belongs to a user in the database, this route is only used for password reset
+      description: Finds a user who's email equals with the given email
+      operationId: verifyEmail
+      parameters:
+        - name: email
+          in: query
+          required: true
+          description: A string email that will use to verify if the user is in the database
+          schema:
+            type: string
+      responses:
+        200:
+          description: An ok that returns a string saying the email is valid
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /auth/password/reset:
+    put:
+      tags:
+        - auth
+      summary: A put request that will take in an email, new-password and confirm-password in order to rest the user password
+      description: Reset a user password
+      operationId: resetId
+      requestBody:
+        description: The body that will contain the email, new-password and confirm-password
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The email of an existing user
+                new_password:
+                  type: string
+                  description: The new password of the user
+                confirm_password:
+                  type: string
+                  description: confirm password of the user, will be use to validate the new password to get a match
+      responses:
+        200:
+          description: An ok that shows that the password have been modified
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: No User found by the provided email
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /accounts:
     get:
       tags:
         - accounts
-      summary: Retrives all accounts that belongs to a particular user. this path needs authentication and authorization
-      description: retrives all accounts associated by a user
+      summary: Retries all accounts that belongs to a particular user. this path needs authentication and authorization
+      description: retrieves all accounts associated by a user
       operationId: getUserAccounts
       security:
         - BearerAuth: []
@@ -230,7 +291,7 @@ paths:
                       description: The unique account number of the account
                     isActive:
                       type: boolean
-                      description: indication that checks wether the account is active or deactive
+                      description: indication that checks weather the account is active or deactivate
                     account_type:
                       type: string
                       description: The account type (Student or commercial)
@@ -268,8 +329,8 @@ paths:
     get:
       tags:
         - accounts
-      summary: Retrives an account by it's Id
-      description: retrive a user account by the account id given in the pathparameter
+      summary: Retries an account by it's Id
+      description: retrieve a user account by the account id given in the parameter
       operationId: accountId
       security:
         - BearerAuth: []
@@ -373,7 +434,7 @@ paths:
                       description: The unique account number of the account
                   isActive:
                       type: boolean
-                      description: indication that checks wether the account is active or deactive in this case (in-Active)
+                      description: indication that checks weather the account is active or deactivate in this case (in-Active)
                   account_type:
                       type: string
                       description: The account type (Student or commercial)
@@ -407,8 +468,63 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         
-        
-        
+  /accounts/add:
+    get:
+      tags:
+        - accounts
+      summary: A get request that will trigger a new creation of an account based on the login user
+      description: An operation that handles an automatic creation of a new account for a user
+      operationId: createAcct
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: an account associated with the account Id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: The ID of the account
+                  account_name:
+                    type: string
+                    description: The name of the account
+                  balance:
+                    type: number
+                    description: The current balance of the account
+                  account_number:
+                    type: string
+                    description: The unique account number of the account
+                  isActive:
+                    type: boolean
+                    description: indication that checks weather the account is active or deactivate
+                  account_type:
+                    type: string
+                    description: The account type (Student or commercial)
+                  creation_date:
+                    type: string
+                    description: the date the account was created
+
+        401:
+          description: Unauthorized - Authentication failed or token is missing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - User does not have access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         
   /transactions:
     get:
