@@ -22,4 +22,4 @@ To set this project up you will need to clone it to your local computer and make
 3. Run the `BackendApplication`
 4. Visit `http://localhost:8080/` or localhost at a port you chose if you changed any ports in the `application-dev.properties` file.
 
-**To get an overview of the actual application proposal you can find the docs [here](documents/composition_document.md)**
+**To get an overview of the actual application proposal you can find the docs [here](src/main/resources/documentation/composition_document.MD)**
