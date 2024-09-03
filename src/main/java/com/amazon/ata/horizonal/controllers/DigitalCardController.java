@@ -8,6 +8,7 @@ import com.amazon.ata.horizonal.enums.CardStatusEnum;
 import com.amazon.ata.horizonal.repositories.CardRepository;
 import com.amazon.ata.horizonal.repositories.UserRepository;
 import com.amazon.ata.horizonal.services.CardService;
+import com.amazon.ata.horizonal.utils.Serial;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class DigitalCardController {
         try {
             return ResponseEntity.ok().body(cardService.getCardsByAccountId(accountId));
         }catch (Exception e){
-            return ResponseEntity.status(500).body(e.getMessage());
+            return ResponseEntity.status(500).body(Serial.serial(e.getMessage()));
         }
 
     }
@@ -41,7 +42,7 @@ public class DigitalCardController {
        //make sure the owner of the card is the only that has the ability to change the status
         if (user.getAccounts().get(0) != null){
             if(!(Objects.equals(user.getAccounts().get(0).getId(), id))){
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not Authorized for this operation");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Serial.serial("You are not Authorized for this operation"));
             }
         }
 
@@ -66,7 +67,7 @@ public class DigitalCardController {
            return ResponseEntity.ok().body(dto);
 
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(Serial.serial(e.getMessage()));
         }
 
 

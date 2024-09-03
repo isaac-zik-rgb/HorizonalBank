@@ -8,6 +8,7 @@ import com.amazon.ata.horizonal.repositories.UserRepository;
 import com.amazon.ata.horizonal.services.UserDetailServiceImpl;
 import com.amazon.ata.horizonal.utils.JwtUtil;
 import com.amazon.ata.horizonal.utils.PopulateAccount;
+import com.amazon.ata.horizonal.utils.Serial;
 import com.amazon.ata.horizonal.utils.Validate;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -50,31 +51,31 @@ public class UserController {
     public ResponseEntity<?> register(@RequestBody RegistrationRequestDto requestDto){
                       //verified Email
         if (!Validate.isEmailValid(requestDto.getEmail())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email does not follow a valid format");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Serial.serial("Email does not follow a valid format"));
         }
 
                         //Verify Password
         if (!Validate.isPasswordValid(requestDto.getPassword().trim())) {
             System.out.println(requestDto.getPassword());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password must be 8 character long with combination of lowerCase," +
-                    " UpperCase, numbers and special character");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Serial.serial("Password must be 8 character long with combination of lowerCase," +
+                    " UpperCase, numbers and special character"));
         }
 
 
                     //verify SSN
         if (!Validate.isSSNValid(requestDto.getSsn())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("SSN does not follow a valid format, e.g(333-33-333)");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Serial.serial("SSN does not follow a valid format, e.g(333-33-333)"));
         }
 
                 //Verify a valid Birthday
         if (!Validate.isBirthDayValid(requestDto.getDate_of_birth())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("date_of_birth does not follow a valid format. e.g (yyy-mm-dd)");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Serial.serial("date_of_birth does not follow a valid format. e.g (yyy-mm-dd)"));
         }
 
 
                     //Validate a valid Postal code
         if (!Validate.isPostalCodeValid(requestDto.getPostal_code())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("PostalCode does not follow a valid format. e.g(10000)");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Serial.serial("PostalCode does not follow a valid format. e.g(10000)"));
         }
 
        try  {
@@ -112,7 +113,7 @@ public class UserController {
 
        }catch(Exception e){
            System.err.println(e.getMessage());
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email Already Exist!");
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Serial.serial("Email Already Exist!"));
        }
 
     }
@@ -169,13 +170,13 @@ public class UserController {
         if (email != null && !email.isBlank()){
             try{
                 UserDetails user =  userDetailService.loadUserByUsername(email);
-                return ResponseEntity.ok().body("User Found In the Database!");
+                return ResponseEntity.ok().body(Serial.serial("User Found In the Database!"));
             }catch (EmailNotFoundException e){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No User Found!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Serial.serial("No User Found!"));
             }
 
         }
-        return ResponseEntity.status(400).body("email can not be null");
+        return ResponseEntity.status(400).body(Serial.serial("email can not be null"));
     }
 
     @PutMapping("/password/reset")
@@ -187,12 +188,13 @@ public class UserController {
                 User user = userRepo.findByEmail(resetDto.getEmail()).get();
                 user.setPassword(resetDto.getNew_password());
                 userRepo.save(user);
-                return ResponseEntity.ok().body("Password Successfully Updated");
+                return ResponseEntity.ok().body(Serial.serial("Password Successfully Updated"));
             }catch (Exception e){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No User Found with the provided Email");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Serial.serial("No User Found with the provided Email"));
             }
 
         }
-        return ResponseEntity.status(400).body("Password do not match");
+        return ResponseEntity.status(400).body(Serial.serial("Password do not match"));
     }
+
 }

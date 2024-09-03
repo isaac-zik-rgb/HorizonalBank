@@ -7,6 +7,7 @@ import com.amazon.ata.horizonal.repositories.AccountRepository;
 import com.amazon.ata.horizonal.services.AccountService;
 import com.amazon.ata.horizonal.utils.GenerateUtil;
 import com.amazon.ata.horizonal.utils.PopulateAccount;
+import com.amazon.ata.horizonal.utils.Serial;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class AccountController {
             System.out.println(user.getFirstName());
             return ResponseEntity.ok().body(accountService.getAccountByUser(user));
         }else{
-            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not Authorised");
+            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Serial.serial("User is not Authorised"));
         }
 
 
@@ -46,7 +47,7 @@ public class AccountController {
         if (user != null) {
             return ResponseEntity.ok(accountService.getAccountById(id));
         }else{
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not Unauthorized");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Serial.serial("User not Unauthorized"));
         }
         }catch (Exception e){
             System.err.println(e);
@@ -69,7 +70,7 @@ public class AccountController {
             accountResponseDto.setActive(acct.getActive());
             return ResponseEntity.ok().body(accountResponseDto);
         }else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not Authenticated");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Serial.serial("User is not Authorised"));
         }
     }
     @DeleteMapping("/accounts/{id}")
@@ -81,7 +82,7 @@ public class AccountController {
 
                 return ResponseEntity.ok().body(accountService.save(acct));
             }else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is notAuthenticated");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Serial.serial("User is notAuthenticated"));
             }
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

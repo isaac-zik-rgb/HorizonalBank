@@ -6,6 +6,7 @@ import com.amazon.ata.horizonal.entites.User;
 import com.amazon.ata.horizonal.services.EmailNotificationService;
 import com.amazon.ata.horizonal.services.TransactionService;
 import com.amazon.ata.horizonal.services.TransferFundsService;
+import com.amazon.ata.horizonal.utils.Serial;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -43,7 +44,7 @@ public class TransactionController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not Authorised");
             }
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Serial.serial(e.getMessage()));
         }
     }
 
@@ -66,12 +67,12 @@ public class TransactionController {
                 service.shutdown();
                 return ResponseEntity.ok().body(message);
             }catch (Exception e){
-                return ResponseEntity.status(500).body(e.getMessage());
+                return ResponseEntity.status(500).body(Serial.serial(e.getMessage()));
             }
 
 
         }else{
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User Is not Authorised");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Serial.serial("User Is not Authorised"));
         }
     }
 }
