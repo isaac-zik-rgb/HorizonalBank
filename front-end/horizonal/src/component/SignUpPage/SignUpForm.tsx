@@ -1,14 +1,21 @@
-import React from "react";
-import { Form, Row, Col, Container } from "react-bootstrap";
+import { Form, Row, Col, Container, Alert, Spinner } from "react-bootstrap";
 import InputField from "./InputField";
 import SubmitButton from "./SubmitButton";
 import Logo from "./Logo";
 
 interface SignUpFormProps {
   onSubmit: (formData: FormData) => void;
+  alertMessage?: string;
+  alertType?: "success" | "danger";
+  loading?: boolean;
 }
 
-const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
+const SignUpForm: React.FC<SignUpFormProps> = ({
+  onSubmit,
+  alertMessage,
+  alertType,
+  loading,
+}) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -27,6 +34,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
             <Logo />
             <h1 className="mt-5 mb-3">Sign up</h1>
             <p className="text-muted mb-4">Please enter your details.</p>
+            {alertMessage && <Alert variant={alertType}>{alertMessage}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Row>
                 <Col md={6}>
@@ -98,7 +106,18 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
                 placeholder="Enter your password"
                 required
               />
-              <SubmitButton className="w-100 mt-4">Sign up</SubmitButton>
+
+              <SubmitButton className="w-100 mt-4" disabled={loading}>
+                {loading && (
+                  <Spinner
+                    animation="border"
+                    size="sm"
+                    className="position-absolute top-50 start-50 translate-middle"
+                    style={{ width: "1rem", height: "1rem" }}
+                  />
+                )}
+                {loading ? "Signing up....." : "Sign Up"}
+              </SubmitButton>
             </Form>
             <p className="text-center mt-4">
               Already have an account?{" "}

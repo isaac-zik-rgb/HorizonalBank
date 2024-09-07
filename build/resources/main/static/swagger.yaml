@@ -24,6 +24,8 @@ servers:
 tags:
   - name: auth
     description: Everything about user authentication and authorization
+  - name: user
+    description: Access to a user by his token
     
   - name: accounts
     description: Access to users account details
@@ -98,7 +100,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           
-    
+  /user:
+    get:
+      tags:
+        - user
+      summary: Return a user by the token
+      description: return the login user data
+      operationId: userId
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: user successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
   /auth/login:
     post:
       tags:

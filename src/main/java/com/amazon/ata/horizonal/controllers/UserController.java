@@ -21,6 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -197,4 +198,20 @@ public class UserController {
         return ResponseEntity.status(400).body(Serial.serial("Password do not match"));
     }
 
+    @GetMapping("/user")
+    public ResponseEntity<?> getUserByToken(@AuthenticationPrincipal User user){
+       try {
+           User usr = userRepo.findByEmail(user.getEmail()).get();
+           UserResponseDto userResponseDto = UserResponseDto.builder()
+                   .withEmail(usr.getEmail())
+                   .withFirstName(usr.getFirstName())
+                   .withLastName(usr.getLastName())
+                   .build();
+           return ResponseEntity.ok().body(userResponseDto);
+       } catch (Exception e) {
+           return ResponseEntity.status(500).body(Serial.serial(e.getMessage()));
+       }
+
+
+    }
 }
