@@ -1,9 +1,11 @@
 package com.amazon.ata.horizonal.controllers;
 
 import com.amazon.ata.horizonal.dto.AccountResponseDto;
+import com.amazon.ata.horizonal.dto.UserResponseDto;
 import com.amazon.ata.horizonal.entites.Account;
 import com.amazon.ata.horizonal.entites.User;
 import com.amazon.ata.horizonal.repositories.AccountRepository;
+import com.amazon.ata.horizonal.repositories.UserRepository;
 import com.amazon.ata.horizonal.services.AccountService;
 import com.amazon.ata.horizonal.utils.GenerateUtil;
 import com.amazon.ata.horizonal.utils.PopulateAccount;
@@ -24,6 +26,8 @@ public class AccountController {
     private PopulateAccount populateAccount;
     @Autowired
     private AccountRepository acctRepo;
+    @Autowired
+    private UserRepository userRepo;
 
     @GetMapping("/accounts")
     public ResponseEntity<?> getUserAccount(@AuthenticationPrincipal User user) {
@@ -90,4 +94,22 @@ public class AccountController {
 
     }
 
+    @GetMapping("/user")
+    public ResponseEntity<?> getUserByToken(@AuthenticationPrincipal User user){
+
+        try {
+
+            User usr = userRepo.findByEmail(user.getEmail()).get();
+            UserResponseDto userResponseDto = UserResponseDto.builder()
+                    .withEmail(usr.getEmail())
+                    .withFirstName(usr.getFirstName())
+                    .withLastName(usr.getLastName())
+                    .build();
+            return ResponseEntity.ok().body(userResponseDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Serial.serial(e.getMessage()));
+        }
+
+
+    }
 }

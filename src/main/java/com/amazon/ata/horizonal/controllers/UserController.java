@@ -198,20 +198,5 @@ public class UserController {
         return ResponseEntity.status(400).body(Serial.serial("Password do not match"));
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<?> getUserByToken(@AuthenticationPrincipal User user){
-       try {
-           User usr = userRepo.findByEmail(user.getEmail()).get();
-           UserResponseDto userResponseDto = UserResponseDto.builder()
-                   .withEmail(usr.getEmail())
-                   .withFirstName(usr.getFirstName())
-                   .withLastName(usr.getLastName())
-                   .build();
-           return ResponseEntity.ok().body(userResponseDto);
-       } catch (Exception e) {
-           return ResponseEntity.status(500).body(Serial.serial(e.getMessage()));
-       }
 
-
-    }
 }

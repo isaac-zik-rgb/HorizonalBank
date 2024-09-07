@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.032s</div>
+<div class="counter">0.023s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,7 +79,7 @@
 <a name="contextLoads()"></a>
 <h3 class="failures">contextLoads()</h3>
 <span class="code">
-<pre>java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@10d18696 testClass = com.amazon.ata.horizonal.HorizonalApplicationTests, locations = [], classes = [com.amazon.ata.horizonal.HorizonalApplication], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [&quot;org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true&quot;], contextCustomizers = [org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@8c11eee, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@4cf8b2dc, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@1b2c4efb, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@7e276594, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@7d42c224, org.springframework.boot.test.context.SpringBootTestAnnotation@5de89b8b], resourceBasePath = &quot;src/main/webapp&quot;, contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+<pre>java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@5a7b309b testClass = com.amazon.ata.horizonal.HorizonalApplicationTests, locations = [], classes = [com.amazon.ata.horizonal.HorizonalApplication], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [&quot;org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true&quot;], contextCustomizers = [org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@8c11eee, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@4cf8b2dc, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@1b2c4efb, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@7e276594, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@7d42c224, org.springframework.boot.test.context.SpringBootTestAnnotation@5de89b8b], resourceBasePath = &quot;src/main/webapp&quot;, contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
 	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
 	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:191)
@@ -176,7 +176,7 @@ Caused by: java.lang.IllegalArgumentException: URL must start with 'jdbc'
 </thead>
 <tr>
 <td class="failures">contextLoads()</td>
-<td class="failures">0.032s</td>
+<td class="failures">0.023s</td>
 <td class="failures">failed</td>
 </tr>
 </table>
@@ -184,8 +184,8 @@ Caused by: java.lang.IllegalArgumentException: URL must start with 'jdbc'
 <div id="tab2" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>23:30:03.764 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.amazon.ata.horizonal.HorizonalApplicationTests]: HorizonalApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-23:30:04.110 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.amazon.ata.horizonal.HorizonalApplication for test class com.amazon.ata.horizonal.HorizonalApplicationTests
+<pre>23:58:09.262 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.amazon.ata.horizonal.HorizonalApplicationTests]: HorizonalApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+23:58:09.590 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.amazon.ata.horizonal.HorizonalApplication for test class com.amazon.ata.horizonal.HorizonalApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -196,15 +196,15 @@ Caused by: java.lang.IllegalArgumentException: URL must start with 'jdbc'
 
  :: Spring Boot ::                (v3.3.2)
 
-2024-09-07T23:30:05.504+01:00  INFO 11852 --- [horizonal] [    Test worker] c.a.a.h.HorizonalApplicationTests        : Starting HorizonalApplicationTests using Java 17.0.12 with PID 11852 (started by HP in C:\Users\HP\Documents\ata)
-2024-09-07T23:30:05.507+01:00  INFO 11852 --- [horizonal] [    Test worker] c.a.a.h.HorizonalApplicationTests        : The following 1 profile is active: &quot;dev&quot;
-2024-09-07T23:30:08.417+01:00  INFO 11852 --- [horizonal] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-09-07T23:30:08.662+01:00  INFO 11852 --- [horizonal] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 219 ms. Found 5 JPA repository interfaces.
-2024-09-07T23:30:09.983+01:00  WARN 11852 --- [horizonal] [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'dataSourceScriptDatabaseInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: URL must start with 'jdbc'
-2024-09-07T23:30:10.016+01:00  INFO 11852 --- [horizonal] [    Test worker] .s.b.a.l.ConditionEvaluationReportLogger : 
+2024-09-07T23:58:11.715+01:00  INFO 2616 --- [horizonal] [    Test worker] c.a.a.h.HorizonalApplicationTests        : Starting HorizonalApplicationTests using Java 17.0.12 with PID 2616 (started by HP in C:\Users\HP\Documents\ata)
+2024-09-07T23:58:11.720+01:00  INFO 2616 --- [horizonal] [    Test worker] c.a.a.h.HorizonalApplicationTests        : The following 1 profile is active: &quot;dev&quot;
+2024-09-07T23:58:14.620+01:00  INFO 2616 --- [horizonal] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-07T23:58:14.862+01:00  INFO 2616 --- [horizonal] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 212 ms. Found 5 JPA repository interfaces.
+2024-09-07T23:58:16.146+01:00  WARN 2616 --- [horizonal] [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'dataSourceScriptDatabaseInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: URL must start with 'jdbc'
+2024-09-07T23:58:16.185+01:00  INFO 2616 --- [horizonal] [    Test worker] .s.b.a.l.ConditionEvaluationReportLogger : 
 
 Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2024-09-07T23:30:10.085+01:00 ERROR 11852 --- [horizonal] [    Test worker] o.s.boot.SpringApplication               : Application run failed
+2024-09-07T23:58:16.258+01:00 ERROR 2616 --- [horizonal] [    Test worker] o.s.boot.SpringApplication               : Application run failed
 
 org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'dataSourceScriptDatabaseInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: URL must start with 'jdbc'
 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:326) ~[spring-beans-6.1.11.jar:6.1.11]
@@ -358,9 +358,9 @@ Caused by: java.lang.IllegalArgumentException: URL must start with 'jdbc'
 	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:146) ~[spring-beans-6.1.11.jar:6.1.11]
 	... 127 common frames omitted
 
-2024-09-07T23:30:10.204+01:00  WARN 11852 --- [horizonal] [    Test worker] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] to prepare test instance [com.amazon.ata.horizonal.HorizonalApplicationTests@6b8b5020]
+2024-09-07T23:58:16.337+01:00  WARN 2616 --- [horizonal] [    Test worker] o.s.test.context.TestContextManager      : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] to prepare test instance [com.amazon.ata.horizonal.HorizonalApplicationTests@4602f874]
 
-java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@10d18696 testClass = com.amazon.ata.horizonal.HorizonalApplicationTests, locations = [], classes = [com.amazon.ata.horizonal.HorizonalApplication], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [&quot;org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true&quot;], contextCustomizers = [org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@8c11eee, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@4cf8b2dc, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@1b2c4efb, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@7e276594, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@7d42c224, org.springframework.boot.test.context.SpringBootTestAnnotation@5de89b8b], resourceBasePath = &quot;src/main/webapp&quot;, contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@5a7b309b testClass = com.amazon.ata.horizonal.HorizonalApplicationTests, locations = [], classes = [com.amazon.ata.horizonal.HorizonalApplication], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = [&quot;org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true&quot;], contextCustomizers = [org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@8c11eee, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@4cf8b2dc, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@1b2c4efb, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@7e276594, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@7d42c224, org.springframework.boot.test.context.SpringBootTestAnnotation@5de89b8b], resourceBasePath = &quot;src/main/webapp&quot;, contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180) ~[spring-test-6.1.11.jar:6.1.11]
 	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130) ~[spring-test-6.1.11.jar:6.1.11]
 	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:191) ~[spring-test-6.1.11.jar:6.1.11]
@@ -565,7 +565,7 @@ Unconditional classes:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.8</a> at Sep 7, 2024, 11:30:10 PM</p>
+<a href="http://www.gradle.org">Gradle 8.8</a> at Sep 7, 2024, 11:58:16 PM</p>
 </div>
 </div>
 </body>
