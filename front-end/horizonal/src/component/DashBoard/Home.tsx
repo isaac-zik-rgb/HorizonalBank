@@ -2,8 +2,63 @@ import { Container, Row, Col } from "react-bootstrap";
 import MyComponent from "./WelcomeSection/MyComponent";
 import Sidebar from "./Sidebar/Sidebar";
 import UserProfile from "./Sidebar/UserProfile";
-
+import { getTransactions, getUser, getCards } from "./AppUtils";
+import { getAcct } from "./AppUtils";
+import { useEffect, useState } from "react";
+import BankingDashboard from "./SidePanel/BankingDashBoard";
 const Home = () => {
+  const [userData, setUserData] = useState<any>(null);
+  const [banks, setBanks] = useState<any>(null);
+  const [transactionsData, setTransactionsData] = useState<any>(null);
+  const [cardData, setCardData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    getUser()
+      .then((data) => {
+        setLoading(false);
+        setUserData(data);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    getAcct()
+      .then((data) => {
+        setLoading(false);
+        setBanks(data);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    getTransactions()
+      .then((data) => {
+        setTransactionsData(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  //for digital cards retriever
+  useEffect(() => {
+    getCards()
+      .then((data) => {
+        setCardData(data[0]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   const navItems = [
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/5f941129ce5eebf40c69d503af739a8e1ba988fca21d14a67ea1936cea8a649f?placeholderIfAbsent=true&apiKey=bea5513f58fa4fdf998b89f6c5d41a22",
@@ -27,6 +82,9 @@ const Home = () => {
     },
   ];
 
+  if (banks != null) {
+    localStorage.setItem("accountId", banks[0].id);
+  }
   return (
     <div>
       <Container fluid>
@@ -35,12 +93,32 @@ const Home = () => {
             <Sidebar navItems={navItems} />
           </Col>
 
-          <Col xs={7} className="p-4">
-            <MyComponent />
+          <Col xs={6} className="p-4">
+            <MyComponent
+              banks={banks ? banks : null}
+              name={userData ? userData.first_name : ""}
+              transactions={transactionsData ? transactionsData : null}
+            />
           </Col>
-          <Row className="mt-auto">
+          {/** Banking DashBoard */}
+          <Col xs={3} className="p-4">
+            {" "}
+            <BankingDashboard
+              cardHolderName={cardData ? cardData.holderName : ""}
+              cardNumber={cardData ? cardData.cardNumber : ""}
+              cvv={cardData ? cardData.cvv : ""}
+              expiration={cardData ? cardData.expirationDate : ""}
+              fullName={
+                userData ? userData.first_name + " " + userData.last_name : ""
+              }
+              email={userData ? userData.email : ""}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={2} className="mt-auto">
             <UserProfile />
-          </Row>
+          </Col>
         </Row>
       </Container>
     </div>

@@ -35,43 +35,45 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {transactions.map((transaction, index) => (
-            <tr key={index}>
-              <TransactionRow transaction={transaction} />
-              <td
-                className={`fw-bold ${
-                  transaction.isPositive ? "text-success" : "text-danger"
-                }`}
-              >
-                {transaction.amount}
-              </td>
-              <td>
-                <span
-                  className={`badge ${
-                    transaction.status === "Success"
-                      ? "bg-success"
-                      : transaction.status === "Declined"
-                      ? "bg-danger"
-                      : "bg-warning"
-                  }`}
-                >
-                  {transaction.status}
-                </span>
-              </td>
-              <td>{transaction.date}</td>
-              <td>
-                <span className={`badge ${transaction.category.color}`}>
-                  <img
-                    src={transaction.category.icon}
-                    alt=""
-                    className="me-1"
-                    style={{ width: "12px", height: "12px" }}
-                  />
-                  {transaction.category.name}
-                </span>
-              </td>
-            </tr>
-          ))}
+          {transactions
+            ? transactions.map((transaction, index) => (
+                <tr key={index}>
+                  <TransactionRow transaction={transaction} />
+                  <td
+                    className={`fw-bold ${
+                      transaction.isPositive ? "text-success" : "text-danger"
+                    }`}
+                  >
+                    {transaction.amount}
+                  </td>
+                  <td>
+                    <span
+                      className={`badge ${
+                        transaction.status === "Success"
+                          ? "bg-success"
+                          : transaction.status === "Declined"
+                          ? "bg-danger"
+                          : "bg-warning"
+                      }`}
+                    >
+                      {transaction.status}
+                    </span>
+                  </td>
+                  <td>{transaction.date}</td>
+                  <td>
+                    <span className={`badge ${transaction.category.color}`}>
+                      <img
+                        src={transaction.category.icon}
+                        alt=""
+                        className="me-1"
+                        style={{ width: "12px", height: "12px" }}
+                      />
+                      {transaction.category.name}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            : null}
         </tbody>
       </table>
     </div>

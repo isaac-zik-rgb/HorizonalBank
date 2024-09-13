@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class TransactionResponseDto {
+    private Long id;
     private Long accountId;
     private String recipient;
     private String sender;
@@ -15,7 +16,7 @@ public class TransactionResponseDto {
     public TransactionResponseDto() {
     }
 
-    public TransactionResponseDto(Long accountId, String recipient, String sender, Double amount, String status,
+    public TransactionResponseDto( Long id, Long accountId, String recipient, String sender, Double amount, String status,
                                   LocalDate date, String category) {
         this.accountId = accountId;
         this.recipient = recipient;
@@ -24,6 +25,7 @@ public class TransactionResponseDto {
         this.status = status;
         this.date = date;
         this.category = category;
+        this.id = id;
     }
 
     public Long getAccountId() {
@@ -80,5 +82,10 @@ public class TransactionResponseDto {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+    public Long getId() { return this.id; }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

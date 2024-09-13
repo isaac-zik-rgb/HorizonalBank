@@ -1,39 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Image, Button } from "react-bootstrap";
+import { getUser } from "../AppUtils";
 
 const UserProfile: React.FC = () => {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
+  const [userData, setUserData] = useState<any>(null);
 
-  const getUser = () => {
-    try {
-      fetch("https://horizonalbank.onrender.com/api/user", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            console.log(response);
-            throw new Error("failed to fetch user");
-          }
-          console.log(response);
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [loading, setLoading] = useState(true); // To handle the loading state
+  const [error, setError] = useState<string | null>(null); // To handle any errors
 
-  // Use useEffect to call getUser when the component loads
   useEffect(() => {
-    getUser();
-  }, []); // Empty dependency array means this runs only once after the initial render
+    getUser()
+      .then((data) => {
+        setUserData(data); // Set the fetched user data
+        setLoading(false); // Loading is complete
+      })
+      .catch((error) => {
+        console.error(error);
+        setError("Failed to load user data"); // Set the error message
+        setLoading(false); // Ensure loading state ends even on error
+      });
+  }, []);
 
+  // Show a loading message while fetching data
+  if (loading) {
+    return <p>Loading...</p>;
+  }
   return (
     <Row className="align-items-center border-top py-3">
       <Col xs="auto">
@@ -46,8 +37,10 @@ const UserProfile: React.FC = () => {
         />
       </Col>
       <Col>
-        <div className="fw-semibold">Adrian Hajdin</div>
-        <div className="text-muted small">adrian@jsmastery.pro</div>
+        <div className="fw-semibold">
+          {userData.first_name + " " + userData.last_name}
+        </div>
+        <div className="text-muted small">{userData.email}</div>
       </Col>
       <Col xs="auto">
         <Button variant="light" size="sm">

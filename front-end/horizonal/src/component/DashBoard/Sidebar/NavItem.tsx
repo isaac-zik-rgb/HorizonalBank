@@ -25,7 +25,10 @@ const NavItem: React.FC<NavItemProps> = ({
       navigate("/dashboard/home");
     }
     if (index == 1) {
-      navigate("/dashboard/banks");
+      navigate("/dashboard/bank");
+    }
+    if (index == 2) {
+      navigate("/dashboard/transactionHistory");
     }
   };
 

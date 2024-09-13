@@ -3,7 +3,16 @@ import TransactionTabs from "./TransactionTabs";
 import ViewAllButton from "./ViewAllButton";
 
 interface RecentTransactionsProps {
-  banks: string[];
+  banks: Props[];
+}
+interface Props {
+  id: number;
+  account_name: string;
+  balance: number;
+  account_number: string;
+  account_type: string;
+  creation_date: string;
+  active?: boolean;
 }
 
 const RecentTransactions: React.FC<RecentTransactionsProps> = ({ banks }) => {

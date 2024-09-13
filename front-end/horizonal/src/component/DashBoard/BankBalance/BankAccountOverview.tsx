@@ -4,7 +4,7 @@ import { AddBankButton } from "./AddBankButton";
 
 interface BankAccountsOverviewProps {
   accountCount: number;
-  totalBalance: string;
+  totalBalance: number | string;
 }
 
 export const BankAccountsOverview: React.FC<BankAccountsOverviewProps> = ({
@@ -25,7 +25,7 @@ export const BankAccountsOverview: React.FC<BankAccountsOverviewProps> = ({
           <div className="d-flex flex-column mt-3 w-100">
             <p className="text-muted small fw-medium">Total Current Balance</p>
             <p className="flex-grow-1 mt-2 fs-2 fw-semibold text-body">
-              {totalBalance}
+              ${totalBalance}
             </p>
           </div>
         </div>

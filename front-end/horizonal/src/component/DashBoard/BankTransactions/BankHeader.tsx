@@ -3,7 +3,7 @@ import React from "react";
 interface BankHeaderProps {
   bankName: string;
   accountType: string;
-  balance: string;
+  balance: number;
 }
 
 const BankHeader: React.FC<BankHeaderProps> = ({
@@ -23,7 +23,7 @@ const BankHeader: React.FC<BankHeaderProps> = ({
         <div>
           <h1 className="h4 mb-0">{bankName}</h1>
           <span className="badge bg-success me-2">{accountType}</span>
-          <span className="text-primary fw-bold">{balance}</span>
+          <span className="text-primary fw-bold">${balance}</span>
         </div>
       </div>
     </header>
