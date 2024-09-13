@@ -571,6 +571,8 @@ paths:
                 items:
                   type: object
                   properties:
+                    id:
+                      type: number
                     accountId:
                       type: number
                       description: The Id of the transaction
