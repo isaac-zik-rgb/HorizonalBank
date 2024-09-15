@@ -1,0 +1,1042 @@
+openapi: 3.0.3
+info:
+  title: Swagger Horizonal BANK - OpenAPI 3.0
+  description: |-
+    This is a Hotrizonal financial application Server based on the OpenAPI 3.0 specification.  A Horizonal Bank financial application is being developed to streamline and simplify various banking functionalities for users. The application will allow users to transfer funds, view transaction history, manage digital cards associated with their accounts, and automatically create an account upon registration and login. This application aims to provide a seamless and efficient experience for users, leveraging modern technologies and design practices to achieve these goals.
+    
+    Some useful links:
+    - [The horizonal bank app repository](https://github.com/isaac-zik-rgb/HorizonalBank/tree/master)
+    - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: okechukwuisaac111@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://horizonal-mz29tyzk.b4a.run/api
+  - url: https://horizonalbank.onrender.com/api
+  - url: http://localhost:8080/api
+tags:
+  - name: auth
+    description: Everything about user authentication and authorization
+  - name: user
+    description: Access to a user by his token
+    
+  - name: accounts
+    description: Access to users account details
+    
+  - name: transactions
+    description: Operations about user transactions
+  - name: digital-cards
+    description: Operations about user digital cards
+  - name: reports
+    description: Operations about user transaction reports
+paths:
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: register a new user
+      description: create a new user based on the provided infomation
+      operationId: addUser
+      requestBody:
+        description: create a new user with its details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: first name of the new user
+                last_name:
+                  type: string
+                  description: last name of the new user
+                password:
+                  type: string
+                  description: Password of the new user, must be 8 character long, contains a capital letter, small letter, digit and a symbol
+                email:
+                  type: string
+                  description: email of the new user. must be a valid email
+                address:
+                  type: string
+                  description: The address of the user
+                date_of_birth:
+                  type: string
+                  description: The date of birth of the user
+                postal_code:
+                  type: number
+                  description: Postal code of the new user
+                state:
+                  type: string
+                  description: The state of the new user
+                ssn:
+                  type: string
+                  description: SSN of the new user
+      
+      responses:
+        200:
+          description: User successfully registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        400:
+          description: Bad request, check your values
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          
+  /user:
+    get:
+      tags:
+        - user
+      summary: Return a user by the token
+      description: return the login user data
+      operationId: userId
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: user successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: login a user
+      description: this route handles user login request
+      operationId: loginUser
+      requestBody:
+        description: login details that is need to be given
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: email of the already existed user
+                password:
+                  type: string
+                  description: password of the already existed user
+            
+      responses:
+        200:
+          description: User successfully loged in
+          content:
+           application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: the user Id
+                  token:
+                    type: string
+                    description: Jwt token for the user, which will be used for subsequent request
+      
+        404:
+          description: No User found with the provided email
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        
+      
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+            
+              
+  
+  /auth/validate:
+    get:
+      tags:
+        - auth
+      summary: validate user token
+      description: this route validate a token and make sure its vaild
+      operationId: validateToken
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: token
+          in: query
+          required: true
+          description: The token to be validated
+          schema:
+            type: string
+      
+      responses:
+        200:
+          description: Token is valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+                    description: Whether the token is valid or not
+                  userId:
+                    type: string
+                    description: The ID of the user associated with the token
+
+        400:
+          description: Bad request, invalid token format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/email/verify:
+    get:
+      tags:
+        - auth
+      summary: verifies that the given email belongs to a user in the database, this route is only used for password reset
+      description: Finds a user who's email equals with the given email
+      operationId: verifyEmail
+      parameters:
+        - name: email
+          in: query
+          required: true
+          description: A string email that will use to verify if the user is in the database
+          schema:
+            type: string
+      responses:
+        200:
+          description: An ok that returns a string saying the email is valid
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /auth/password/reset:
+    put:
+      tags:
+        - auth
+      summary: A put request that will take in an email, new-password and confirm-password in order to rest the user password
+      description: Reset a user password
+      operationId: resetId
+      requestBody:
+        description: The body that will contain the email, new-password and confirm-password
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The email of an existing user
+                new_password:
+                  type: string
+                  description: The new password of the user
+                confirm_password:
+                  type: string
+                  description: confirm password of the user, will be use to validate the new password to get a match
+      responses:
+        200:
+          description: An ok that shows that the password have been modified
+          content:
+            application/json:
+              schema:
+                type: string
+        404:
+          description: No User found by the provided email
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /accounts:
+    get:
+      tags:
+        - accounts
+      summary: Retries all accounts that belongs to a particular user. this path needs authentication and authorization
+      description: retrieves all accounts associated by a user
+      operationId: getUserAccounts
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: A list of accounts associated with the authenticated user.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      description: The ID of the account
+                    account_name:
+                      type: string
+                      description: The name of the account
+                    balance:
+                      type: number
+                      description: The current balance of the account
+                    account_number:
+                      type: string
+                      description: The unique account number of the account
+                    isActive:
+                      type: boolean
+                      description: indication that checks weather the account is active or deactivate
+                    account_type:
+                      type: string
+                      description: The account type (Student or commercial)
+                    creation_date:
+                      type: string
+                      description: the date of the account creation
+        404:
+          description: No accounts found by the user
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/ErrorResponse'
+              
+                    
+        401:
+          description: Unauthorized - Authentication failed or token is missing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - User does not have access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        
+  /accounts/{id}:
+    get:
+      tags:
+        - accounts
+      summary: Retries an account by it's Id
+      description: retrieve a user account by the account id given in the parameter
+      operationId: accountId
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: the account id which will be used to retrieve the account
+          schema:
+            type: number
+      
+      responses:
+        200:
+          description: an account associated with the account Id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                      type: number
+                      description: The ID of the account
+                  account_name:
+                      type: string
+                      description: The name of the account
+                  balance:
+                      type: number
+                      description: The current balance of the account
+                  account_number:
+                      type: string
+                      description: The unique account number of the account
+                  isActive:
+                      type: boolean
+                      description: indication that checks wether the account is active or deactive
+                  account_type:
+                      type: string
+                      description: The account type (Student or commercial)
+                  creation_date:
+                    type: string
+                    description: the date the account was created
+        404:
+          description: No account found by the given account id
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/ErrorResponse'
+              
+                    
+        401:
+          description: Unauthorized - Authentication failed or token is missing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - User does not have access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        
+    delete:
+      tags:
+        - accounts
+      summary: A delete request to safe delete an account i.e making it in-active.
+      description: mark the account as in-active. it won't be return in a get request
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: the id of the account to be marked in-active
+          schema:
+            type: number
+      responses:
+        200:
+          description: the deactivated account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                      type: number
+                      description: The ID of the account
+                  account_name:
+                      type: string
+                      description: The name of the account
+                  balance:
+                      type: number
+                      description: The current balance of the account
+                  account_number:
+                      type: string
+                      description: The unique account number of the account
+                  isActive:
+                      type: boolean
+                      description: indication that checks weather the account is active or deactivate in this case (in-Active)
+                  account_type:
+                      type: string
+                      description: The account type (Student or commercial)
+                  creation_date:
+                    type: string
+                    description: the daate the account was created
+        404:
+          description: No account found by the given account id
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/ErrorResponse'
+              
+                    
+        401:
+          description: Unauthorized - Authentication failed or token is missing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - User does not have access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        
+  /accounts/add:
+    get:
+      tags:
+        - accounts
+      summary: A get request that will trigger a new creation of an account based on the login user
+      description: An operation that handles an automatic creation of a new account for a user
+      operationId: createAcct
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: an account associated with the account Id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: The ID of the account
+                  account_name:
+                    type: string
+                    description: The name of the account
+                  balance:
+                    type: number
+                    description: The current balance of the account
+                  account_number:
+                    type: string
+                    description: The unique account number of the account
+                  isActive:
+                    type: boolean
+                    description: indication that checks weather the account is active or deactivate
+                  account_type:
+                    type: string
+                    description: The account type (Student or commercial)
+                  creation_date:
+                    type: string
+                    description: the date the account was created
+
+        401:
+          description: Unauthorized - Authentication failed or token is missing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - User does not have access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        
+  /transactions:
+    get:
+      tags:
+        - transactions
+      summary: Get all the transcation history that belongs to an account
+      description: perform a get request to retrieve all the transaction history regarding to a particular account
+      operationId: getTransaction
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: accountId
+          in: query
+          required: true
+          description: The account Id that will be used to retrieve the transaction history
+          schema:
+            type: number
+      
+      responses:
+        200:
+          description: An account transaction history successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      description: a unique id to identify each transaction
+                    accountId:
+                      type: number
+                      description: The Id of the transaction
+                    recipient:
+                      type: string
+                      description: The firstName and lastName of the recipient
+                    sender:
+                      type: string
+                      description: The firstName and lastName of the sender
+                    accountName:
+                      type: string
+                      description: The recipient account name
+                    amount:
+                      type: number
+                      description: The amount that was transferred or received
+                    status:
+                      type: string
+                      description: The status of the transaction
+                    isPositive:
+                      type: boolean
+                      description: checks if the transaction is a deposit or debit
+                    date:
+                      type: string
+                      description: The time of the transaction
+                    category:
+                      type: string
+                      description: The category the transaction belong to
+                      
+        404:
+          description: No transaction history found for this account
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/ErrorResponse'
+              
+                    
+        401:
+          description: Unauthorized - Authentication failed or token is missing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - User does not have access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          
+  /transactions/transfer:
+    post:
+      tags:
+        - transactions
+      summary: Transfer digital funds from an account to another
+      description: handles funds transfer from a user account to an other account
+      operationId: fundsId
+      security:
+        - BearerAuth: [ ]
+      requestBody:
+        description: The body that will holds the transfer required data value
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountId:
+                  type: number
+                  description: The account Id you want to transfer the funds from
+                remarks:
+                  type: string
+                  description: A short note descriping the purpose of the transfer
+                recipientEmail:
+                  type: string
+                  description: The email of the recipient
+                recipientAcctNum:
+                  type: string
+                  description: The account number the money should be transfer to
+                amount:
+                  type: number
+                  description: The amount that is to be transferred
+                category:
+                  type: string
+                  description: The category the transaction will belong to
+      responses:
+        200:
+          description: Response showing the data of the transfer response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recipientName:
+                    type: string
+                    description: A combination of the recipient firstName and lastname
+                  amount:
+                    type: number
+                    description: The ammount that was transfered
+                  transactionType:
+                    type: string
+                    description: The type of transaction it is (Transfer / withrawal)
+                  transactionDate:
+                    type: string
+                    description: The date the transaction occured
+                  recipientAcctName:
+                    type: string
+                    description: The recipient account name
+                  recipientAcctNum:
+                    type: string
+                    description: recipient acctount number
+
+        404:
+          description: No Account found with the accountId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        402:
+          description: Non-Sufficient account balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+        401:
+          description: Unauthorized - Authentication failed or token is missing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - User does not have access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+  
+  /digital-cards:
+    get:
+      tags:
+        - digital-cards
+      summary: Get all digital cards that belongs to an account using the account id in the query
+      description: Retrieve digital cards of an account
+      operationId: getDigitalCard
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: accountId
+          in: query
+          required: true
+          description: The accountId that we will use to retrive the cards belonging to the account
+          schema:
+            type: number
+      responses:
+        200:
+          description: Account Cards successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    cardId:
+                      type: number
+                      description: the Id of the card
+                    cardNumber:
+                     type: string
+                     description: A unique 16 digit card number
+                    holderName:
+                      type: string
+                      description: The first name and last name of the card owner
+                    accountName:
+                      type: string
+                      description: The name of the bank that issue the card 
+                    cardType:
+                      type: string
+                      description: Value representing the type the card is (DEBIT/CREDIT)
+                    expirationDate:
+                      type: string
+                      description: The Card expiration date
+                    cvv:
+                      type: integer
+                      description: The card verification value
+                    status:
+                      type: string
+                      description: the status of the card, either (Freeze or unfreeze)
+          
+        404:
+          description: No Cards found for this Account
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/ErrorResponse'
+              
+                    
+        401:
+          description: Unauthorized - Authentication failed or token is missing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - User does not have access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                  
+  
+  /digital-cards/{id}/status:
+    put:
+      tags:
+        - digital-cards
+      summary: Sends a request to freeze a card or unfreeze it
+      description: Freezes a card or unFreeze it
+      operationId: freezeCard
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The Id of the card to freeze or unfreeze
+          schema:
+            type: number
+      requestBody:
+        description: The value that will determine the status of the card
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: The status of the card, this will can the status of the card
+        
+      responses:
+        200:
+          description: Card Status Succefully Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    cardId:
+                      type: number
+                      description: the Id of the card
+                    cardNumber:
+                     type: string
+                     description: A unique 16 digit card number
+                    holderName:
+                      type: string
+                      description: The first name and last name of the card owner
+                    accountName:
+                      type: string
+                      description: The name of the bank that issue the card 
+                    cardType:
+                      type: string
+                      description: Value representing the type the card is (DEBIT/CREDIT)
+                    expirationDate:
+                      type: string
+                      description: The Card expiration date
+                    cvv:
+                      type: integer
+                      description: The card verification value
+                    status:
+                      type: string
+                      description: The current status of the card
+                      
+        404:
+          description: No Card found for this Account
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/ErrorResponse'
+              
+                    
+        401:
+          description: Unauthorized - Authentication failed or token is missing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - User does not have access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                
+                
+                
+  /report/transactions:
+    get:
+      tags:
+        - reports
+      summary: Retrieve a list of transaction report based on a specified start date and end date
+      description: return a list of transaction report a user had during a specifed date range
+      operationId: getReportId
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: accountId
+          in: query
+          required: true
+          description: The account Id the transaction record belongs to
+          schema:
+            type: number
+        - name: startDate
+          in: query
+          required: true
+          description: The startDate that will use to filter the record
+          schema:
+            type: string
+        - name: endDate
+          in: query
+          required: true
+          description: the endDate that will be used to filter the record between the startDate and endDate
+          schema:
+            type: string
+            
+      
+      responses:
+        200:
+          description: A list of transactions record between a certain startDate and ebdDate
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    accountId:
+                      type: number
+                      description: The Id of the transaction
+                    recipient:
+                      type: string
+                      description: The firstName and lastName of the recipient
+                    sender:
+                      type: string
+                      description: The firstName and lastName of the sender
+                    accountName:
+                      type: string
+                      description: The recipient account name
+                    amount:
+                      type: number
+                      description: The amount that was transfered or received
+                    status:
+                      type: string
+                      description: The status of the transaction
+                    date:
+                      type: string
+                      description: The time of the transaction
+                    category:
+                      type: string
+                      description: The category the transaction belong to
+        404:
+          description: No transaction history found
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/ErrorResponse'
+              
+                    
+        401:
+          description: Unauthorized - Authentication failed or token is missing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - User does not have access to the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A detailed message explaining the error
+        code:
+          type: integer
+          description: HTTP status code of the error
+        details:
+          type: object
+          description: Additional details about the error
+    User:
+      type: object
+      properties:
+                first_name:
+                  type: string
+                  description: first name of the new user
+                last_name:
+                  type: string
+                  description: last name of the new user
+                password:
+                  type: string
+                  description: Password of the new user, must be 8 character long, contains a capital letter, small letter, digit and a symbol
+                email:
+                  type: string
+                  description: email of the new user. must be a valid email
+                address:
+                  type: string
+                  description: The address of the user
+                date_of_birth:
+                  type: string
+                  description: The date of birth of the user
+                postal_code:
+                  type: number
+                  description: Postal code of the new user
+                state:
+                  type: string
+                  description: The state of the new user
+                ssn:
+                  type: string
+                  description: SSN of the new user
+        
+      
+
+        
+        

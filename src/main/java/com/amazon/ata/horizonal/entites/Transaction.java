@@ -15,7 +15,7 @@ public class Transaction {
     private Long id;
 
     @Column(name = "is_Positive")
-    private boolen isPositive;
+    private boolean isPositive;
 
     @Column(name = "transaction_type")
     private String transactionType;
