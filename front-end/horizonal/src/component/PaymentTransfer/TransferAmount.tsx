@@ -19,9 +19,8 @@ const TransferAmount: React.FC<TransferAmountProps> = ({
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedCategory = e.target.value;
-    setCategoryState(selectedCategory);
-    setCategory(selectedCategory);
+    setCategoryState(e.target.value);
+    setCategory(e.target.value);
   };
 
   return (
@@ -41,7 +40,6 @@ const TransferAmount: React.FC<TransferAmountProps> = ({
             className="form-select"
             value={category}
             onChange={handleCategoryChange}
-            aria-placeholder="Select Category"
           >
             <option value="food">Food</option>
             <option value="subscription">Subscription</option>

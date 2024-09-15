@@ -44,7 +44,7 @@ public class TransactionController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not Authorised");
             }
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Serial.serial(e.getMessage()));
         }
     }
 

@@ -51,7 +51,9 @@ const TransferPage = () => {
       .catch((error) => {
         console.log("Error occured: ", error);
         setAlertType("error");
-        setAlertMessage("Error transferring funds. Please try again.");
+        setAlertMessage(
+          "Error transferring funds. Please try again Or check your transfer details."
+        );
       });
   };
 
