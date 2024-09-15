@@ -93,7 +93,7 @@ public class TransactionResponseDto {
         this.id = id;
     }
 
-    public void setIsPositive(boolean isPositive) { this.isPositive = isPositive; }
+    public void setIsPositive(boolean isPositive) { this.isPositive = Boolean.TRUE.equals(isPositive); }
 
-    public boolean getIsPositive() {return this.isPositive; }
+    public boolean getIsPositive() {return Boolean.TRUE.equals(this.isPositive); }
 }

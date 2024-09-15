@@ -45,7 +45,7 @@ public class TransactionService {
             transactionResponseDto.setStatus(transaction.getStatus());
             transactionResponseDto.setSender(transaction.getSender());
             transactionResponseDto.setId(transaction.getId());
-            transactionResponseDto.setIsPositive(transaction.getIsPositive());
+            transactionResponseDto.setIsPositive(Boolean.TRUE.equals(transaction.getIsPositive()));
             //find the account of the recipient by accountNumber
             Account recipient = accountService.findByAccountNumber(transaction.getRecipientAccountNumber()).get();
 

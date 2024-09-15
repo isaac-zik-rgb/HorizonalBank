@@ -15,7 +15,7 @@ public class Transaction {
     private Long id;
 
     @Column(name = "is_Positive")
-    private boolean isPositive;
+    private Boolean isPositive;
 
     @Column(name = "transaction_type")
     private String transactionType;
@@ -56,7 +56,7 @@ public class Transaction {
                        String recipientFullName, String sender
     ) {
         this.id = id;
-        this.isPositive = isPositive;
+        this.isPositive = Boolean.TRUE.equals(isPositive);
         this.transactionType = transactionType;
         this.amount = amount;
         this.date = date;
@@ -158,7 +158,7 @@ public class Transaction {
         return sender;
     }
 
-    public void setIsPositive(boolean isPositive) { this.isPositive = isPositive; }
+    public void setIsPositive(boolean isPositive) { this.isPositive = Boolean.TRUE.equals(isPositive); }
 
-    public boolean getIsPositive() { return this.isPositive; }
+    public boolean getIsPositive() { return Boolean.TRUE.equals(this.isPositive); }
 }
