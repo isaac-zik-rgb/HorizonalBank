@@ -8,11 +8,9 @@ interface Transaction {
   isPositive: boolean;
   status: "Processing" | "Success" | "Declined";
   date: string;
-  category: {
-    name: string;
-    color: string;
-    icon: string;
-  };
+  category: string;
+  color?: string;
+  icon?: string;
 }
 
 interface TransactionTableProps {
@@ -63,14 +61,14 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
                   </td>
                   <td>{transaction.date}</td>
                   <td>
-                    <span className={`badge ${transaction.category.color}`}>
+                    <span className={`badge ${transaction.color}`}>
                       <img
-                        src={transaction.category.icon}
+                        src={transaction.icon}
                         alt=""
                         className="me-1"
                         style={{ width: "12px", height: "12px" }}
                       />
-                      {transaction.category.name}
+                      {transaction.category}
                     </span>
                   </td>
                 </tr>

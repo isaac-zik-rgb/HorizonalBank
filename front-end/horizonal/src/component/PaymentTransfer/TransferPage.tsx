@@ -39,6 +39,7 @@ const TransferPage = () => {
     })
       .then((response) => {
         if (!response.ok) {
+          console.log(response);
           throw new Error("Error processing transfer");
         }
         return response.json();

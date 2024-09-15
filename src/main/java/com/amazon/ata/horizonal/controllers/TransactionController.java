@@ -65,7 +65,7 @@ public class TransactionController {
                 String message = future.get();
 
                 service.shutdown();
-                return ResponseEntity.ok().body(message);
+                return ResponseEntity.ok().body(Serial.serial(message));
             }catch (Exception e){
                 return ResponseEntity.status(500).body(Serial.serial(e.getMessage()));
             }
