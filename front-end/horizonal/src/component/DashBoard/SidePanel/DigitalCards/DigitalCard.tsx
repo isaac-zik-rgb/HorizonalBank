@@ -9,6 +9,7 @@ interface DigitalCardProps {
   cardHolderName: string;
   cvv: string;
   expiration: string;
+  accountNumber: string;
 }
 
 const DigitalCard: React.FC<DigitalCardProps> = ({
@@ -16,6 +17,7 @@ const DigitalCard: React.FC<DigitalCardProps> = ({
   cardHolderName,
   cvv,
   expiration,
+  accountNumber,
 }) => {
   const expiryDate = formateDate(expiration);
   return (
@@ -30,6 +32,7 @@ const DigitalCard: React.FC<DigitalCardProps> = ({
           cardHolderName={cardHolderName}
           cvv={cvv}
           expiration={expiryDate}
+          accountNumber={accountNumber}
         />
       </div>
     </section>

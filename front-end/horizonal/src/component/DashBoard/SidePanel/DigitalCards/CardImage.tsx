@@ -5,6 +5,7 @@ interface CardImageProps {
   cardHolderName: string;
   cvv: string;
   expiration: string;
+  accountNumber: string;
 }
 
 const CardImage: React.FC<CardImageProps> = ({
@@ -12,6 +13,7 @@ const CardImage: React.FC<CardImageProps> = ({
   cardHolderName,
   cvv,
   expiration,
+  accountNumber,
 }) => {
   return (
     <div className="card mt-3">
@@ -27,6 +29,15 @@ const CardImage: React.FC<CardImageProps> = ({
           type="text"
           name="cardNumber"
           value={cardNumber}
+          readOnly
+          className="form-control mb-2"
+        />
+
+        <label className="card-text">Account Number:</label>
+        <input
+          type="text"
+          name="cardNumber"
+          value={accountNumber}
           readOnly
           className="form-control mb-2"
         />

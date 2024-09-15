@@ -105,7 +105,8 @@ public class TransferFundsService implements Callable<String> {
                     TransactionStatusEnum.SUCCESS.name(),
                     sendersAccount,
                     TransactionTypeEnum.TRANSFER.name(),
-                    sender.getFirstName() + " " + sender.getLastName()
+                    sender.getFirstName() + " " + sender.getLastName(),
+                    false
             );
 
             //credit account
@@ -117,7 +118,8 @@ public class TransferFundsService implements Callable<String> {
                     TransactionStatusEnum.SUCCESS.name(),
                     recipientAccount,
                     TransactionTypeEnum.TRANSFER.name(),
-                    sender.getFirstName() + " " + sender.getLastName()
+                    sender.getFirstName() + " " + sender.getLastName(),
+                    true
             );
 
             //Send Debit Notification to the sender email
@@ -131,7 +133,7 @@ public class TransferFundsService implements Callable<String> {
             );
 
 
-             double currentAmt = recipientAccount.getBalance() + currentBal;
+             double currentAmt = recipientAccount.getBalance() + transferFundRequestDto.getAmount();
 
             //Send Credit alert notification to the recipient email
             emailService.sendEmail(recipient.getEmail(), "Credit Alert!!!",
@@ -151,7 +153,8 @@ public class TransferFundsService implements Callable<String> {
                     TransactionStatusEnum.DECLINE.name(),
                     sendersAccount,
                     TransactionTypeEnum.TRANSFER.name(),
-                    sender.getFirstName() + " " + sender.getLastName()
+                    sender.getFirstName() + " " + sender.getLastName(),
+                    false
                     );
 
 
@@ -172,7 +175,7 @@ public class TransferFundsService implements Callable<String> {
 
 
     private void populateTransaction(String fullName, String status, Account account, String type,
-                                     String sender) {
+                                     String sender, boolean isPositive) {
         Transaction transaction = new Transaction();
         transaction.setAccount(account);
         transaction.setCategory(transferFundRequestDto.getCategory());
@@ -184,6 +187,7 @@ public class TransferFundsService implements Callable<String> {
         transaction.setStatus(status);
         transaction.setRecipientFullName(fullName);
         transaction.setSender(sender);
+        transaction.setIsPositive(isPositive);
         transactionRepo.save(transaction);
 
     }

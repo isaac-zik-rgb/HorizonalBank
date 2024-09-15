@@ -1,19 +1,21 @@
 import React from "react";
 
 interface TransactionRowProps {
-  name: string;
+  recipient: string;
   amount: string;
   status: string;
   date: string;
   category: string;
+  isPositive: boolean;
 }
 
 const TransactionRow: React.FC<TransactionRowProps> = ({
-  name,
+  recipient,
   amount,
   status,
   date,
   category,
+  isPositive,
 }) => {
   const getStatusClass = (status: string) => {
     switch (status.toLowerCase()) {
@@ -46,9 +48,9 @@ const TransactionRow: React.FC<TransactionRowProps> = ({
 
   return (
     <tr>
-      <td>{name}</td>
-      <td className={amount.startsWith("+") ? "text-success" : "text-danger"}>
-        {amount}
+      <td>{recipient}</td>
+      <td className={isPositive ? "text-success" : "text-danger"}>
+        {isPositive ? "+$" + amount : "-$" + amount}
       </td>
       <td>
         <span className={`badge ${getStatusClass(status)}`}>{status}</span>

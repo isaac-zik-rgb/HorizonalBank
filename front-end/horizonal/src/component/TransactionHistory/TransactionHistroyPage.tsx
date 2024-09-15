@@ -3,11 +3,11 @@ import Sidebar from "./Sidebar/Sidebar";
 import UserProfile from "./Sidebar/UserProfile";
 import TransactionHistory from "./TransactionHistory";
 import { useEffect, useState } from "react";
-import { getTransactions } from "../DashBoard/AppUtils";
+import { getTransactions, getAcct } from "../DashBoard/AppUtils";
 
 const TransactionHistroyPage = () => {
   const [transactions, setTransactionsData] = useState<any>(null);
-
+  const [acct, setAcct] = useState<any>(null);
   // Get the user transactions
   useEffect(() => {
     getTransactions()
@@ -19,55 +19,17 @@ const TransactionHistroyPage = () => {
         console.log(error);
       });
   }, []);
-  // interface Transaction {
-  //   id: number;
-  //   name: string;
-  //   amount: string;
-  //   status: string;
-  //   date: string;
-  //   category: string;
-  // }
-  //   const transactions: Transaction[] = [
-  //     {
-  //       id: 1,
-  //       name: "Spotify",
-  //       amount: "- $15.00",
-  //       status: "Processing",
-  //       date: "Wed 1:00pm",
-  //       category: "Subscriptions",
-  //     },
-  //     {
-  //       id: 2,
-  //       name: "Alexa Doe",
-  //       amount: "+ $88.00",
-  //       status: "Success",
-  //       date: "Wed 2:45am",
-  //       category: "Deposit",
-  //     },
-  //     {
-  //       id: 3,
-  //       name: "JSM Pro",
-  //       amount: "- $18.99",
-  //       status: "Processing",
-  //       date: "Mon 1:10pm",
-  //       category: "Subscriptions",
-  //     },
-  //     {
-  //       id: 4,
-  //       name: "Fresh F&V",
-  //       amount: "- $88.00",
-  //       status: "Success",
-  //       date: "Tue 12:15pm",
-  //       category: "Groceries",
-  //     },
-  //     {
-  //       id: 5,
-  //       name: "Figma",
-  //       amount: "- $18.99",
-  //       status: "Processing",
-  //       date: "Tue 6:10pm",
-  //       category: "Income",
-  //     },
+
+  useEffect(() => {
+    getAcct()
+      .then((data) => {
+        setAcct(data[0]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   //     {
   //       id: 6,
   //       name: "Sam Sulek",
@@ -110,7 +72,12 @@ const TransactionHistroyPage = () => {
             <Sidebar navItems={navItems} />
           </Col>
           <Col xs={8} className="p-5">
-            <TransactionHistory transactions={transactions} />
+            <TransactionHistory
+              transactions={transactions}
+              balance={acct && acct.balance}
+              accountName={acct && acct.account_name}
+              accountNumber={acct && acct.account_number.slice(-4)}
+            />
           </Col>
         </Row>
         <Row>

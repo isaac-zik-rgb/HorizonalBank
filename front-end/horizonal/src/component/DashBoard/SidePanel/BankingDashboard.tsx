@@ -9,6 +9,7 @@ interface BankingDashboardProps {
   expiration: string;
   fullName: string;
   email: string;
+  accountNumber: string;
 }
 
 const BankingDashboard: React.FC<BankingDashboardProps> = ({
@@ -18,6 +19,7 @@ const BankingDashboard: React.FC<BankingDashboardProps> = ({
   expiration,
   fullName,
   email,
+  accountNumber,
 }) => {
   return (
     <main className="container mx-auto px-4 py-8">
@@ -41,6 +43,7 @@ const BankingDashboard: React.FC<BankingDashboardProps> = ({
             cardNumber={cardNumber}
             cvv={cvv}
             expiration={expiration}
+            accountNumber={accountNumber}
           />
           <BudgetSection />
         </div>

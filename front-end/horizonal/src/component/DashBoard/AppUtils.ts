@@ -43,7 +43,7 @@ export const getAcct = async () => {
 
 export const getTransactions = async () => {
   try{
-    const response = await fetch(`https://horizonalbank.onrender.com/api/transactions?accountId=${localStorage.getItem("accountId")}`,{
+    const response = await fetch(`https://horizonalbank.onrender.com/api/transactions?accountId=${Number(localStorage.getItem("accountId"))}`,{
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -54,6 +54,7 @@ export const getTransactions = async () => {
     }
 
     const data = await response.json();
+    console.log(data);
     return data;
   } catch(error) {
     console.log("Error in getTransactions function: ", error);

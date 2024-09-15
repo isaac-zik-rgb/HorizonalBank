@@ -3,11 +3,23 @@ import Sidebar from "./Sidebar/Sidebar";
 import MyComponent from "../LoginPage/Alert";
 import UserProfile from "../DashBoard/Sidebar/UserProfile";
 import { useState, useEffect } from "react";
-import { getAcct } from "../DashBoard/AppUtils";
+import { getCards } from "../DashBoard/AppUtils";
 import BankAccounts from "./BankAccount";
 
 const BankPage = () => {
-  const [banks, setBanks] = useState<any>(null);
+  // get Cards
+  const [cards, setCards] = useState<any[]>([]);
+
+  useEffect(() => {
+    getCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const navItems = [
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/5f941129ce5eebf40c69d503af739a8e1ba988fca21d14a67ea1936cea8a649f?placeholderIfAbsent=true&apiKey=bea5513f58fa4fdf998b89f6c5d41a22",
@@ -31,17 +43,6 @@ const BankPage = () => {
     },
   ];
 
-  //get banks
-  useEffect(() => {
-    getAcct()
-      .then((data) => {
-        setBanks(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
   return (
     <div>
       <Container fluid>
@@ -50,7 +51,7 @@ const BankPage = () => {
             <Sidebar navItems={navItems} />
           </Col>
           <Col xs={8} className="p-5">
-            <BankAccounts />
+            <BankAccounts cards={cards} />
           </Col>
         </Row>
         <Row>

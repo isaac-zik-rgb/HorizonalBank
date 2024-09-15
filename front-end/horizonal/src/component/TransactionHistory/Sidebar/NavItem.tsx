@@ -30,6 +30,9 @@ const NavItem: React.FC<NavItemProps> = ({
     if (index == 2) {
       navigate("/dashboard/transactionHistory");
     }
+    if (index == 3) {
+      navigate("/dashboard/transfer");
+    }
   };
 
   return (

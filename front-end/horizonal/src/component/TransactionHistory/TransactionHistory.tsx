@@ -7,18 +7,25 @@ import FilterButton from "./FilterButton";
 
 interface Transaction {
   id: number;
-  name: string;
+  recipient: string;
   amount: string;
   status: string;
   date: string;
   category: string;
+  isPositive: boolean;
 }
 interface TransactionHistoryProps {
   transactions: Transaction[];
+  accountName: string;
+  balance: number;
+  accountNumber: string;
 }
 
 const TransactionHistory: React.FC<TransactionHistoryProps> = ({
   transactions,
+  accountName,
+  balance,
+  accountNumber,
 }) => {
   return (
     <main className="py-5 bg-light">
@@ -32,14 +39,18 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
           </div>
           <AccountSelector />
         </header>
-        <AccountSummary />
+        <AccountSummary
+          accountName={accountName}
+          balance={balance}
+          accountNumber={accountNumber}
+        />
         <section className="mt-4">
           <div className="d-flex justify-content-between align-items-center mb-3">
             <h2 className="h4 mb-0">Transaction history</h2>
             <FilterButton />
           </div>
           <TransactionTable transactions={transactions} />
-          {transactions.length > 1 ? <Pagination /> : ""}
+          {transactions && transactions.length > 1 ? <Pagination /> : ""}
         </section>
       </div>
     </main>

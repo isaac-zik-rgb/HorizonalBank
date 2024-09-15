@@ -21,7 +21,7 @@ interface Props {
 }
 
 interface TransactionProps {
-  name: string;
+  recipient: string;
   image: "https://cdn.builder.io/api/v1/image/assets/TEMP/3e0cf7d73572d0f2935d85f37fa4f384acede48b7c7270d6c2e77198eb5a01df?placeholderIfAbsent=true&apiKey=bea5513f58fa4fdf998b89f6c5d41a22";
   amount: string;
   isPositive: boolean;
@@ -48,8 +48,8 @@ const MyComponent: React.FC<BanksProps> = ({ banks, name, transactions }) => {
       />
       <RecentTransactions banks={banks} />
       <BankTransactions
-        bankName={banks ? banks[0].account_name : "no name"}
-        accountType={banks ? banks[0].account_type : "no type"}
+        bankName={banks ? banks[0].account_name : ""}
+        accountType={banks ? banks[0].account_type : ""}
         balance={banks ? banks[0].balance : 0}
         transactions={transactions}
       />

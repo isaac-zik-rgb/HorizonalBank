@@ -14,6 +14,9 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "is_Positive")
+    private boolen isPositive;
+
     @Column(name = "transaction_type")
     private String transactionType;
 
@@ -47,11 +50,13 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Long id, String transactionType, Double amount, LocalDate date, String category, String remarks,
+    public Transaction(Long id,  boolean isPositive, String transactionType, Double amount, LocalDate date,
+                       String category, String remarks,
                        Account account, String recipientAccountNumber, String status,
                        String recipientFullName, String sender
     ) {
         this.id = id;
+        this.isPositive = isPositive;
         this.transactionType = transactionType;
         this.amount = amount;
         this.date = date;
@@ -152,4 +157,8 @@ public class Transaction {
     public String getSender() {
         return sender;
     }
+
+    public void setIsPositive(boolean isPositive) { this.isPositive = isPositive; }
+
+    public boolean getIsPositive() { return this.isPositive; }
 }

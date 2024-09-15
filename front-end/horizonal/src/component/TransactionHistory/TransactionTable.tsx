@@ -3,11 +3,12 @@ import TransactionRow from "./TransactionRow";
 
 interface Transaction {
   id: number;
-  name: string;
+  recipient: string;
   amount: string;
   status: string;
   date: string;
   category: string;
+  isPositive: boolean;
 }
 
 interface TransactionTableProps {

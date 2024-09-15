@@ -84,6 +84,7 @@ const Home = () => {
 
   if (banks != null) {
     localStorage.setItem("accountId", banks[0].id);
+    localStorage.setItem("accountName", banks[0].account_name);
   }
   return (
     <div>
@@ -112,6 +113,7 @@ const Home = () => {
                 userData ? userData.first_name + " " + userData.last_name : ""
               }
               email={userData ? userData.email : ""}
+              accountNumber={banks && banks[0].account_number}
             />
           </Col>
         </Row>

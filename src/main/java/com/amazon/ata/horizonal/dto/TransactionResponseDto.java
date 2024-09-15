@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class TransactionResponseDto {
     private Long id;
+    private boolean isPositive;
     private Long accountId;
     private String recipient;
     private String sender;
@@ -16,7 +17,9 @@ public class TransactionResponseDto {
     public TransactionResponseDto() {
     }
 
-    public TransactionResponseDto( Long id, Long accountId, String recipient, String sender, Double amount, String status,
+    public TransactionResponseDto( Long id, boolean isPositive,
+                                   Long accountId, String recipient,
+                                   String sender, Double amount, String status,
                                   LocalDate date, String category) {
         this.accountId = accountId;
         this.recipient = recipient;
@@ -26,6 +29,7 @@ public class TransactionResponseDto {
         this.date = date;
         this.category = category;
         this.id = id;
+        this.isPositive = isPositive;
     }
 
     public Long getAccountId() {
@@ -88,4 +92,8 @@ public class TransactionResponseDto {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public void setIsPositive(boolean isPositive) { this.isPositive = isPositive; }
+
+    public boolean getIsPositive() {return this.isPositive; }
 }

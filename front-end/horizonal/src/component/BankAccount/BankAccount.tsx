@@ -3,21 +3,21 @@ import BankCard from "./BankCard";
 import SpendingBar from "./SpendngBar";
 import { getCards } from "../DashBoard/AppUtils";
 
-interface BankAccountsProps {}
+interface BankAccountsProps {
+  cards: CardProps[];
+}
 
-const BankAccounts: React.FC<BankAccountsProps> = () => {
-  const [cards, setCards] = useState<any[]>([]);
-
-  useEffect(() => {
-    getCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
+interface CardProps {
+  accountName: string;
+  holderName: string;
+  cardNumber: string;
+  expirationDate: string;
+  spending: number;
+  gradient: string;
+  logoSrc: string;
+  cardType: string;
+}
+const BankAccounts: React.FC<BankAccountsProps> = ({ cards }) => {
   // const cards = [
   //   {
   //     accountName: "Horizon Banking",

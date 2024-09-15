@@ -37,7 +37,7 @@ const LoginForm: React.FC = () => {
       .then((data) => {
         console.log("Login Successfully:", data);
         localStorage.setItem("token", data.token);
-        navigate("/dashboard");
+        navigate("/dashboard/home");
       })
       .catch((error) => {
         setError("Incorrect email or password!!");
