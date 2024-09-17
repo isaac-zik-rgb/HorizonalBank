@@ -10,6 +10,7 @@ interface PaymentTransferProps {
   setRemarks: (remarks: string) => void;
   handleTransfer: () => void;
   setCategory: (category: string) => void;
+  loading: boolean;
 }
 
 const PaymentTransfer: React.FC<PaymentTransferProps> = ({
@@ -19,6 +20,7 @@ const PaymentTransfer: React.FC<PaymentTransferProps> = ({
   setAmount,
   handleTransfer,
   setCategory,
+  loading,
 }) => {
   return (
     <main className="container-fluid py-5 bg-light">
@@ -44,7 +46,7 @@ const PaymentTransfer: React.FC<PaymentTransferProps> = ({
         setAmount={setAmount}
         setCategory={setCategory}
       />
-      <TransferButton handleTransfer={handleTransfer} />
+      <TransferButton handleTransfer={handleTransfer} loading={loading} />
     </main>
   );
 };

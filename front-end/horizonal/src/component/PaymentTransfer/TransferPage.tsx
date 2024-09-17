@@ -11,12 +11,13 @@ const TransferPage = () => {
   const [amount, setAmount] = useState(0);
   const [remarks, setRemarks] = useState("");
   const [category, setCategory] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState<"success" | "error" | null>(null);
 
   // a function to handle transfer submition
   const handleSumbit = () => {
+    setLoading(true);
     //prepare the data
     const transferFunds = {
       accountId: Number(localStorage.getItem("accountId")),
@@ -45,11 +46,13 @@ const TransferPage = () => {
         return response.json();
       })
       .then((data) => {
+        setLoading(false);
         console.log(data);
         setAlertType("success");
         setAlertMessage("Funds transferred successfully!");
       })
       .catch((error) => {
+        setLoading(false);
         console.log("Error occured: ", error);
         setAlertType("error");
         setAlertMessage(
@@ -117,6 +120,7 @@ const TransferPage = () => {
               setRemarks={setRemarks}
               handleTransfer={handleSumbit}
               setCategory={setCategory}
+              loading={loading}
             />
           </Col>
         </Row>

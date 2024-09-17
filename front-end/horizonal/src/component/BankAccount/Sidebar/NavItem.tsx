@@ -20,7 +20,6 @@ const NavItem: React.FC<NavItemProps> = ({
   const navigate = useNavigate();
 
   const handleSelect = (index: number) => {
-    console.log(index);
     if (index == 0) {
       navigate("/dashboard/home");
     }

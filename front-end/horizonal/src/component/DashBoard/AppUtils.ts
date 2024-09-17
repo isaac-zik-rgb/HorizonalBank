@@ -41,7 +41,7 @@ export const getAcct = async () => {
 };
 
 
-export const getTransactions = async () => {
+export const getTransactions = async (max: number) => {
   try{
     const response = await fetch(`https://horizonalbank.onrender.com/api/transactions?accountId=${Number(localStorage.getItem("accountId"))}`,{
       method: "GET",
@@ -54,8 +54,11 @@ export const getTransactions = async () => {
     }
 
     const data = await response.json();
-    console.log(data);
+    if (max == 5){
+      return data.slice(0, max);
+    }
     return data;
+    
   } catch(error) {
     console.log("Error in getTransactions function: ", error);
     throw error;

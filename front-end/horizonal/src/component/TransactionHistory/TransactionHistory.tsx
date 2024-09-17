@@ -2,7 +2,6 @@ import React from "react";
 import AccountSelector from "./AccountSelector";
 import AccountSummary from "./AccountSummary";
 import TransactionTable from "./TransactionTable";
-import Pagination from "./Pagination";
 import FilterButton from "./FilterButton";
 
 interface Transaction {
@@ -50,7 +49,6 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({
             <FilterButton />
           </div>
           <TransactionTable transactions={transactions} />
-          {transactions && transactions.length > 1 ? <Pagination /> : ""}
         </section>
       </div>
     </main>

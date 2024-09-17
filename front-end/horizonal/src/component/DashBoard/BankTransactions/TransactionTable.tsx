@@ -61,7 +61,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
                   </td>
                   <td>{transaction.date}</td>
                   <td>
-                    <span className={`badge ${transaction.color}`}>
+                    <span className={`badge bg-primary`}>
                       <img
                         src={transaction.icon}
                         alt=""

@@ -19,7 +19,16 @@ const ProtectedRoute: React.FC = () => {
   }, [verifyToken]);
 
   if (loading) {
-    return <div>Loading...</div>; // Optional: Add a spinner or loading animation here
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   }
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;

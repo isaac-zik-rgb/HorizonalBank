@@ -106,7 +106,9 @@ const BankAccounts: React.FC<BankAccountsProps> = ({ cards }) => {
           {cards.map((card, index) => (
             <div key={index} className="col">
               <BankCard {...card} />
-              <SpendingBar spending={card.spending} />
+              <SpendingBar
+                spending={Number(localStorage.getItem("spending"))}
+              />
             </div>
           ))}
         </div>

@@ -16,7 +16,6 @@ const BankCard: React.FC<BankCardProps> = ({
   expirationDate,
   cardType,
 }) => {
-  console.log(accountName);
   const logoSrc =
     "https://cdn.builder.io/api/v1/image/assets/TEMP/038ee99e98ef3b4c9087e498d94d2753f99f91e6e9c7d1ce0370304dfbb30259?placeholderIfAbsent=true&apiKey=bea5513f58fa4fdf998b89f6c5d41a22";
 

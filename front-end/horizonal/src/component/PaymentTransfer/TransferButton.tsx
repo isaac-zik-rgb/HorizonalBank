@@ -2,9 +2,13 @@ import React from "react";
 
 interface TransferButtonProps {
   handleTransfer: () => void;
+  loading: boolean;
 }
 
-const TransferButton: React.FC<TransferButtonProps> = ({ handleTransfer }) => {
+const TransferButton: React.FC<TransferButtonProps> = ({
+  handleTransfer,
+  loading,
+}) => {
   return (
     <div className="row">
       <div className="col-12">
@@ -17,7 +21,7 @@ const TransferButton: React.FC<TransferButtonProps> = ({ handleTransfer }) => {
             border: "none",
           }}
         >
-          Transfer Funds
+          {loading ? "Transfering Please wait!!!...." : "Transfer Funds"}
         </button>
       </div>
     </div>

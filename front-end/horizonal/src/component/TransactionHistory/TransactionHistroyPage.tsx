@@ -3,44 +3,53 @@ import Sidebar from "./Sidebar/Sidebar";
 import UserProfile from "./Sidebar/UserProfile";
 import TransactionHistory from "./TransactionHistory";
 import { useEffect, useState } from "react";
-import { getTransactions, getAcct } from "../DashBoard/AppUtils";
+import { getTransactions, getAcct, getUser } from "../DashBoard/AppUtils";
 
 const TransactionHistroyPage = () => {
   const [transactions, setTransactionsData] = useState<any>(null);
   const [acct, setAcct] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState<any>(null);
   // Get the user transactions
+
   useEffect(() => {
-    getTransactions()
+    setLoading(true);
+    getTransactions(0)
       .then((data) => {
+        setLoading(false);
         console.log(data);
         setTransactionsData(data);
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
       });
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     getAcct()
       .then((data) => {
+        setLoading(false);
         setAcct(data[0]);
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
       });
   }, []);
 
-  //     {
-  //       id: 6,
-  //       name: "Sam Sulek",
-  //       amount: "- $40.20",
-  //       status: "Declined",
-  //       date: "Tue 5:40am",
-  //       category: "Food and dining",
-  //     },
-  //   ];
-
-  //NAvItem
+  useEffect(() => {
+    setLoading(true);
+    getUser()
+      .then((data) => {
+        setUserData(data);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  }, []);
   const navItems = [
     {
       icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/5f941129ce5eebf40c69d503af739a8e1ba988fca21d14a67ea1936cea8a649f?placeholderIfAbsent=true&apiKey=bea5513f58fa4fdf998b89f6c5d41a22",
@@ -64,6 +73,18 @@ const TransactionHistroyPage = () => {
     },
   ];
 
+  if (loading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
   return (
     <div>
       <Container fluid>
@@ -82,7 +103,12 @@ const TransactionHistroyPage = () => {
         </Row>
         <Row>
           <Col xs={2} className="mt-auto">
-            <UserProfile />
+            <UserProfile
+              fullName={
+                userData && userData.first_name + " " + userData.last_name
+              }
+              email={userData && userData.email}
+            />
           </Col>
         </Row>
       </Container>

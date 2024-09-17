@@ -40,7 +40,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    getTransactions()
+    getTransactions(5)
       .then((data) => {
         setTransactionsData(data);
       })
@@ -85,6 +85,18 @@ const Home = () => {
   if (banks != null) {
     localStorage.setItem("accountId", banks[0].id);
     localStorage.setItem("accountName", banks[0].account_name);
+  }
+  if (loading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
   }
   return (
     <div>

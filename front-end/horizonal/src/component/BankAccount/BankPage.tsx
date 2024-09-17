@@ -1,6 +1,5 @@
 import { Container, Col, Row } from "react-bootstrap";
 import Sidebar from "./Sidebar/Sidebar";
-import MyComponent from "../LoginPage/Alert";
 import UserProfile from "../DashBoard/Sidebar/UserProfile";
 import { useState, useEffect } from "react";
 import { getCards } from "../DashBoard/AppUtils";
@@ -9,13 +8,17 @@ import BankAccounts from "./BankAccount";
 const BankPage = () => {
   // get Cards
   const [cards, setCards] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     getCards()
       .then((data) => {
+        setLoading(false);
         setCards(data);
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
       });
   }, []);
@@ -42,7 +45,18 @@ const BankPage = () => {
       label: "Connect Bank",
     },
   ];
-
+  if (loading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
   return (
     <div>
       <Container fluid>

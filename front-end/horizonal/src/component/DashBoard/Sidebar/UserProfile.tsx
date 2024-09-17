@@ -43,7 +43,14 @@ const UserProfile: React.FC = () => {
         <div className="text-muted small">{userData.email}</div>
       </Col>
       <Col xs="auto">
-        <Button variant="light" size="sm">
+        <Button
+          variant="light"
+          size="sm"
+          onClick={() => {
+            localStorage.clear();
+            window.location.href = "/login";
+          }}
+        >
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/f7baf370aaefb596584e590a7ebf2c59e9e617fea35dd40d1e81ba28f9edb26f?placeholderIfAbsent=true&apiKey=bea5513f58fa4fdf998b89f6c5d41a22"
             alt="Settings"
