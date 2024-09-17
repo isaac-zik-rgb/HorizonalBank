@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Row, Col, Image, Button } from "react-bootstrap";
-import { getUser } from "../../DashBoard/AppUtils";
 
 interface Props {
   fullName: string;

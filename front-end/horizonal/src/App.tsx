@@ -9,6 +9,7 @@ import SignUpPage from "./component/SignUpPage/SignUpPage";
 import Home from "./component/DashBoard/Home";
 import BankPage from "./component/BankAccount/BankPage";
 import TransactionHistroyPage from "./component/TransactionHistory/TransactionHistroyPage";
+import HomePage from "./component/HomePage/HomePage";
 const App: React.FC = () => {
   //defined my array
 
@@ -16,6 +17,7 @@ const App: React.FC = () => {
     <AuthProvider>
       <Router>
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
 

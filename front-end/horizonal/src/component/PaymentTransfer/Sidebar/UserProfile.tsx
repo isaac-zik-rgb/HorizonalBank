@@ -6,7 +6,6 @@ const UserProfile: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
 
   const [loading, setLoading] = useState(true); // To handle the loading state
-  const [error, setError] = useState<string | null>(null); // To handle any errors
 
   useEffect(() => {
     getUser()
@@ -16,7 +15,6 @@ const UserProfile: React.FC = () => {
       })
       .catch((error) => {
         console.error(error);
-        setError("Failed to load user data"); // Set the error message
         setLoading(false); // Ensure loading state ends even on error
       });
   }, []);
