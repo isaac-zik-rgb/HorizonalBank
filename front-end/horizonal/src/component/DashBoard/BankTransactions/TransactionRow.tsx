@@ -33,7 +33,9 @@ const TransactionRow: React.FC<TransactionRowProps> = ({ transaction }) => {
           {transaction.image}
         </div>
       )}
-      <span>{transaction.recipient}</span>
+      <span>
+        {transaction.isPositive ? transaction.sender : transaction.recipient}
+      </span>
     </td>
   );
 };
