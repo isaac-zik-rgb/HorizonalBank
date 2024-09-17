@@ -11,6 +11,7 @@ interface Transaction {
   category: string;
   color?: string;
   icon?: string;
+  sender: string;
 }
 
 interface TransactionTableProps {

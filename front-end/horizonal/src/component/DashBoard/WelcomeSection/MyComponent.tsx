@@ -30,6 +30,7 @@ interface TransactionProps {
   category: string;
   color: "bg-primary";
   icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/00047ad5237897fbe7f4f0a060e6428c6dd2c73240b5e5b52c386dd7f342e11f?placeholderIfAbsent=true&apiKey=bea5513f58fa4fdf998b89f6c5d41a22";
+  sender: string;
 }
 
 const MyComponent: React.FC<BanksProps> = ({ banks, name, transactions }) => {

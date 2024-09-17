@@ -6,6 +6,7 @@ interface TransactionRowProps {
   status: string;
   date: string;
   category: string;
+  sender: string;
   isPositive: boolean;
 }
 
@@ -16,6 +17,7 @@ const TransactionRow: React.FC<TransactionRowProps> = ({
   date,
   category,
   isPositive,
+  sender,
 }) => {
   const getStatusClass = (status: string) => {
     switch (status.toLowerCase()) {
@@ -48,7 +50,7 @@ const TransactionRow: React.FC<TransactionRowProps> = ({
 
   return (
     <tr>
-      <td>{recipient}</td>
+      <td>{isPositive ? sender : recipient}</td>
       <td className={isPositive ? "text-success" : "text-danger"}>
         {isPositive ? "+$" + amount : "-$" + amount}
       </td>

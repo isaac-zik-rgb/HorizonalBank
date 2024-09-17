@@ -19,6 +19,7 @@ interface TransactionsProps {
   category: string;
   color?: string;
   icon?: string;
+  sender: string;
 }
 
 const BankTransactions: React.FC<Props> = ({

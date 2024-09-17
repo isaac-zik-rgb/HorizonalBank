@@ -12,6 +12,7 @@ interface Transaction {
   date: string;
   category: string;
   isPositive: boolean;
+  sender: string;
 }
 interface TransactionHistoryProps {
   transactions: Transaction[];
