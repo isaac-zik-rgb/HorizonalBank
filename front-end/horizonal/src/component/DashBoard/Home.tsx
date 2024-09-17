@@ -5,7 +5,7 @@ import UserProfile from "./Sidebar/UserProfile";
 import { getTransactions, getUser, getCards } from "./AppUtils";
 import { getAcct } from "./AppUtils";
 import { useEffect, useState } from "react";
-import BankingDashboard from "./SidePanel/BankingDashBoard";
+import BankingDashboard from "./SidePanel/SideBoard";
 const Home = () => {
   const [userData, setUserData] = useState<any>(null);
   const [banks, setBanks] = useState<any>(null);
