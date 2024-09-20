@@ -34,6 +34,7 @@ const SignUpPage: React.FC = () => {
         setAlertMessage("Registration successful!");
         console.log("Signup successful:", result);
         setLoading(false);
+        naviage("/login");
         // Handle success (e.g., redirect to login page or dashboard)
       } else {
         const result = await response.json();
@@ -41,7 +42,7 @@ const SignUpPage: React.FC = () => {
         setAlertMessage(result.message);
         console.error("Signup failed:", result.message);
         setLoading(false);
-        naviage("/login");
+
         // Handle failure (e.g., show an error message to the user)
       }
     } catch (error) {
