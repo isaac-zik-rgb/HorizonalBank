@@ -21,6 +21,8 @@ interface TransactionTableProps {
 const TransactionTable: React.FC<TransactionTableProps> = ({
   transactions,
 }) => {
+  const transactionRev = transactions && [...transactions].reverse();
+
   return (
     <div className="table-responsive">
       <table className="table table-striped">
@@ -34,8 +36,8 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {transactions
-            ? transactions.map((transaction, index) => (
+          {transactionRev
+            ? transactionRev.map((transaction, index) => (
                 <tr key={index}>
                   <TransactionRow transaction={transaction} />
                   <td

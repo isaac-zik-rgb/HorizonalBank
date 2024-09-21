@@ -55,7 +55,7 @@ export const getTransactions = async (max: number) => {
 
     const data = await response.json();
     if (max == 5){
-      return data.slice(0, max);
+      return data.slice(-max);
     }
     return data;
     

@@ -20,6 +20,7 @@ interface TransactionTableProps {
 const TransactionTable: React.FC<TransactionTableProps> = ({
   transactions,
 }) => {
+  const transactionsRev = transactions && [...transactions].reverse();
   const [currentPage, setCurrentPage] = useState(1);
   const transactionsPerPage = 5;
 
@@ -27,15 +28,15 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
   const indexOfLastTransaction = currentPage * transactionsPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - transactionsPerPage;
   const currentTransactions =
-    transactions &&
-    transactions.slice(indexOfFirstTransaction, indexOfLastTransaction);
+    transactionsRev &&
+    transactionsRev.slice(indexOfFirstTransaction, indexOfLastTransaction);
 
   //set the spending
   localStorage.setItem("spending", "0");
   // Change page handler
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   transactions &&
-    transactions.forEach((transaction) => {
+    transactionsRev.forEach((transaction) => {
       if (!transaction.isPositive) {
         const spending = Number(localStorage.getItem("spending"));
         const total = Number(transaction.amount) + spending;
