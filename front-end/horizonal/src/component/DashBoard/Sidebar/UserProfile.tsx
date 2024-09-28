@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Image, Button } from "react-bootstrap";
 import { getUser } from "../AppUtils";
+import codezenith1 from "../../../assets/images/codezenith1.png";
 
 const UserProfile: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
@@ -27,7 +28,7 @@ const UserProfile: React.FC = () => {
     <Row className="align-items-center border-top py-3">
       <Col xs="auto">
         <Image
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/da9ea20b50e8ba61feee865ec365930f4dc10ef717e43fd184b6f0b0b819fcc0?placeholderIfAbsent=true&apiKey=bea5513f58fa4fdf998b89f6c5d41a22"
+          src={codezenith1}
           alt="Adrian Hajdin"
           roundedCircle
           width={40}
